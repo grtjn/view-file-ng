@@ -1,3 +1,25 @@
+ /**
+  * @ngdoc directive
+  * @memberOf 'view.file'
+  * @name view-file
+  * @description
+  *   Angular directive for viewing files. Leverages a.o. highlightjs, json-explorer, sanitize, videogular, x2js.
+  *
+  * @attr {String}    uri           Required. Url of file to be viewed.
+  * @attr {String}    content-type  Required. Mime-type of file to be viewed.
+  * @attr {String}    download-uri  Optional. Url of file for download purpose. Default: null.
+  * @attr {String}    file-name     Optional. Filename for display. Default: uri portion after last /.
+  * @attr {Boolean}   allow-modal   Optional. Allow opening of file in modal overlay. Default: true.
+  * @attr {Boolean}   controls      Optional. Show controls on left. Default: true if download-uri or allow-modal.
+  * @attr {Boolean}   show-code     Optional. Show raw code initially for JSON, HTML, Text, and XML. Default: false.
+  * @attr {Boolean}   trust-uri     Optional. Apply trustAsResourceUrl on uri (not recommended). Default: false.
+  *
+  * @example
+  * <view-file uri="ctrl.viewUri" download-uri="ctrl.downloadUri" content-type="ctrl.contentType"
+  *   file-name="ctrl.fileName" allow-modal="true" controls="true" show-code="false" trust-uri="false">
+  * </view-file>
+  */
+
 (function () {
 
   'use strict';

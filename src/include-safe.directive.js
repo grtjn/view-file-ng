@@ -1,3 +1,16 @@
+ /**
+  * @ngdoc directive
+  * @memberOf 'view.file'
+  * @name include-safe
+  * @description
+  *   Angular attribute directive for including sanitized HTML from url.
+  *
+  * @attr {String}    include-safe  Required. Url of HTML file to be inserted.
+  *
+  * @example
+  * <div include-safe="ctrl.viewUri">Loading..</div>
+  */
+
 (function () {
 
   'use strict';

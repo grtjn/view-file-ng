@@ -46,7 +46,11 @@
     "angular",
     "angularjs",
     "view",
-    "file"
+    "file",
+    "highlightjs",
+    "json-explorer",
+    "videogular"
+    "x2js"
   ],
   "license": "Apache-2.0",
   "ignore": [

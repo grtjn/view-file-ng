@@ -8,9 +8,11 @@
 
   function FriendlyXmlCtrl($scope, $sce, $templateCache, $http, x2js) {
     var ctrl = this;
+
     ctrl.trustUri = function(uri) {
       $sce.trustAsResourceUrl(uri);
     };
+
     ctrl.load = function(uri) {
       var xml = $templateCache.get(uri);
 
@@ -24,29 +26,25 @@
           }
         }).then(function (response) {
           $scope.loading = false;
-          /* jshint camelcase: false */
-          /* jscs: disable requireCamelCaseOrUpperCaseIdentifiers*/
-          $scope.json = x2js.xml_str2json(response.data);
-          /* jscs: enable requireCamelCaseOrUpperCaseIdentifiers*/
-          /* jshint camelcase: true */
+          ctrl.parse(response.data);
         });
       } else if (angular.isArray(xml)){
         $scope.loading = false;
-        /* jshint camelcase: false */
-        /* jscs: disable requireCamelCaseOrUpperCaseIdentifiers*/
-        $scope.json = x2js.xml_str2json(xml[1]);
-        /* jscs: enable requireCamelCaseOrUpperCaseIdentifiers*/
-        /* jshint camelcase: true */
+        ctrl.parse(xml[1]);
       } else {
         xml.then(function(response) {
           $scope.loading = false;
-          /* jshint camelcase: false */
-          /* jscs: disable requireCamelCaseOrUpperCaseIdentifiers*/
-          $scope.json = x2js.xml_str2json(response.data);
-          /* jscs: enable requireCamelCaseOrUpperCaseIdentifiers*/
-          /* jshint camelcase: true */
+          ctrl.parse(response.data);
         });
       }
+    };
+
+    ctrl.parse = function(xml) {
+      /* jshint camelcase: false */
+      /* jscs: disable requireCamelCaseOrUpperCaseIdentifiers*/
+      $scope.json = x2js.xml_str2json(xml);
+      /* jscs: enable requireCamelCaseOrUpperCaseIdentifiers*/
+      /* jshint camelcase: true */
     };
   }
 }());

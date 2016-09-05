@@ -1,3 +1,21 @@
+ /**
+  * @ngdoc directive
+  * @memberOf 'view.file'
+  * @name friendly-json
+  * @description
+  *   Angular directive for rendering nested JSON structures in a user-friendly way.
+  *
+  * @attr {String}    uri           Optional. Url of JSON file to be rendered. Url must be trusted upfront.
+  * @attr {String}    json          Optional. JSON contents to be rendered. Do not use together with uri.
+  *
+  * @example
+  * <friendly-json uri="ctrl.viewUri"></friendly-json>
+  * 
+  * or
+  * 
+  * <friendly-json json="ctrl.json"></friendly-json>
+  */
+
 (function () {
 
   'use strict';
