@@ -18,7 +18,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/home.html',
-    '<h1 class="page-header" itemprop="name">View Files in Angular</h1><div class="home row"><h4>Key features</h4><ul><li>One directive to view files</li><li>Friendly content display of Audio, HTML, JSON, PDF, Text, Video, and XML</li><li>Pretty source display for JSON, HTML, Text, and XML</li><li>Optional controlbar with buttons for modal display and download</li></ul><h4>Examples</h4><div class="row" ng-repeat="file in ctrl.files"><div class="col-md-10 col-md-offset-1"><view-file uri="file.uri" content-type="file.type" download-uri="file.uri"></view-file></div></div></div>');
+    '<h1 class="page-header" itemprop="name">View Files in Angular</h1><div class="home row"><h4>Key features</h4><ul><li>One directive to view files</li><li>Friendly content display of Audio, HTML, JSON, PDF, Text, Video, and XML</li><li>Pretty source display for JSON, HTML, Text, and XML</li><li>Optional controlbar with buttons for modal display and download</li></ul><h4>Examples</h4><div class="row" ng-repeat="file in ctrl.files"><div class="col-md-10 col-md-offset-1"><h5>{{ file.uri.split(\'/\').pop() }} - {{ file.type }}</h5><view-file uri="file.uri" content-type="file.type" download-uri="file.uri"></view-file></div></div></div>');
 }]);
 })();
 
