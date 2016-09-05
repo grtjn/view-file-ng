@@ -517,10 +517,6 @@
   *
   * @example
   * <view-object data="ctrl.viewUri" type="ctrl.contentType" height="'600px'" width="'100%'"></view-object>
-  * 
-  * or
-  * 
-  * <friendly-xml xml="ctrl.xml"></friendly-xml>
   */
 
 (function () {
@@ -608,9 +604,9 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/view-file-ng/view-file.html',
-    '<div class="view-file row" style="padding-right: 30px">\n' +
+    '<div class="view-file row">\n' +
     '\n' +
-    '  <div class="col-sm-1 text-right" ng-if="controls && (((fileType === \'xml\') || (fileType === \'json\') || (fileType === \'html\') || (fileType === \'text\')) || allowModal || downloadUri)" class="pull-left controls">\n' +
+    '  <div class="controls col-sm-1 text-right" ng-if="controls && (((fileType === \'xml\') || (fileType === \'json\') || (fileType === \'html\') || (fileType === \'text\')) || allowModal || downloadUri)">\n' +
     '    <div class="code-control">\n' +
     '      <a ng-if="(fileType === \'xml\') || (fileType === \'json\') || (fileType === \'html\') || (fileType === \'text\')" class="btn btn-default" ng-click="ctrl.toggleCode()">\n' +
     '        <span ng-show="!showCode && ((fileType === \'json\') || (fileType === \'text\'))">{ }</span>\n' +
@@ -628,38 +624,40 @@ module.run(['$templateCache', function($templateCache) {
     '    </div>\n' +
     '  </div>\n' +
     '\n' +
-    '  <div ng-class="{\'col-sm-11\': controls, \'col-sm-12\': !controls}" style="min-height: 600px">\n' +
-    '    <div class="loading" style="position: absolute">\n' +
+    '  <div class="viewer-wrapper" ng-class="{\'col-sm-11\': controls, \'col-sm-12\': !controls}">\n' +
+    '    <div class="loading">\n' +
     '      Loading... <i class="fa fa-spinner fa-spin"></i>\n' +
     '    </div>\n' +
     '\n' +
-    '    <div class="viewer" ng-if="!loading" style="position: absolute; width: 100%; min-height: 600px; background-color: white">\n' +
+    '    <div class="viewer" ng-if="!loading">\n' +
     '      <!-- audio / video -->\n' +
-    '      <videogular ng-if="fileType === \'audio\' || fileType === \'video\'" style="{{ fileType === \'audio\' ? \'height: 50px;\' : \'\' }}">\n' +
-    '        <vg-media vg-src="uri"></vg-media>\n' +
-    '        <vg-controls>\n' +
-    '          <vg-play-pause-button></vg-play-pause-button>\n' +
-    '          <vg-time-display>{{ currentTime | date:\'mm:ss\' }}</vg-time-display>\n' +
-    '          <vg-scrub-bar>\n' +
-    '            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>\n' +
-    '          </vg-scrub-bar>\n' +
-    '          <vg-time-display>{{ timeLeft | date:\'mm:ss\' }}</vg-time-display>\n' +
-    '          <vg-volume>\n' +
-    '            <vg-mute-button></vg-mute-button>\n' +
-    '            <vg-volume-bar></vg-volume-bar>\n' +
-    '          </vg-volume>\n' +
-    '          <vg-fullscreen-button ng-show="fileType === \'video\'"></vg-fullscreen-button>\n' +
-    '        </vg-controls>\n' +
-    '      </videogular>\n' +
+    '      <div class="source">\n' +
+    '        <videogular ng-if="fileType === \'audio\' || fileType === \'video\'" style="{{ fileType === \'audio\' ? \'height: 70px;\' : \'\' }}">\n' +
+    '          <vg-media vg-src="uri"></vg-media>\n' +
+    '          <vg-controls>\n' +
+    '            <vg-play-pause-button></vg-play-pause-button>\n' +
+    '            <vg-time-display>{{ currentTime | date:\'mm:ss\' }}</vg-time-display>\n' +
+    '            <vg-scrub-bar>\n' +
+    '              <vg-scrub-bar-current-time></vg-scrub-bar-current-time>\n' +
+    '            </vg-scrub-bar>\n' +
+    '            <vg-time-display>{{ timeLeft | date:\'mm:ss\' }}</vg-time-display>\n' +
+    '            <vg-volume>\n' +
+    '              <vg-mute-button></vg-mute-button>\n' +
+    '              <vg-volume-bar></vg-volume-bar>\n' +
+    '            </vg-volume>\n' +
+    '            <vg-fullscreen-button ng-show="fileType === \'video\'"></vg-fullscreen-button>\n' +
+    '          </vg-controls>\n' +
+    '        </videogular>\n' +
+    '      </div>\n' +
     '\n' +
     '      <!-- html / text -->\n' +
     '      <div ng-if="(fileType === \'html\') || (fileType === \'text\')">\n' +
-    '        <div class="source" ng-show="!showCode" include-safe="uri"></div>\n' +
+    '        <div class="source" ng-show="!showCode"><div include-safe="uri"></div></div>\n' +
     '        <hljs ng-show="showCode" hljs-include="uri"></hljs>\n' +
     '      </div>\n' +
     '\n' +
     '      <!-- image -->\n' +
-    '      <img ng-if="fileType === \'image\'" ng-src="{{uri}}">\n' +
+    '      <div class="source text-center" ng-if="fileType === \'image\'"><img ng-src="{{uri}}"></div>\n' +
     '\n' +
     '      <!-- json -->\n' +
     '      <div ng-if="fileType === \'json\'">\n' +
@@ -674,7 +672,7 @@ module.run(['$templateCache', function($templateCache) {
     '      </div>\n' +
     '\n' +
     '      <!-- other -->\n' +
-    '      <view-object ng-if="fileType === \'other\'" data="uri" type="contentType" height="\'600px\'" width="\'100%\'">\n' +
+    '      <view-object class="source" ng-if="fileType === \'other\'" data="uri" type="contentType">\n' +
     '        <a ng-show="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}">Download</a>\n' +
     '        <div class="alert alert-danger" ng-show="!downloadUri">Alert: Cannot display this file!</div>\n' +
     '      </view-object>\n' +
