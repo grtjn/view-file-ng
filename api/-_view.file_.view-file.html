@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JSDoc: view-file</title>
+    <link href="css/prettify-tomorrow.css" type="text/css" rel="stylesheet">
+    <link href="css/site.css" type="text/css" rel="stylesheet">
+  </head>
+  <body ng-app="">
+    <nav id="toc">
+      <input placeholder="Filter" id="filter-input" class="col12 block field" type="text">
+      <div class="nav-wrapper">
+      <h2><a href="index.html">Index</a></h2>
+      <ul class="module">
+        <!-- _view_file_ -->
+        <h2 class="module">
+          <a chref="" ng-click="module_view_file_ = !module_view_file_">
+            module: 'view.file'
+          </a>
+          <i ng-cloak="" ng-show="module_view_file_">+</i>
+        </h2>
+        <li id="'view.file'" ng-hide="module_view_file_">
+          <ul class="group">
+            <h2>
+              <a href="" ng-click="_view_file_directive = !_view_file_directive">
+                directive
+              </a>
+              <i ng-cloak="" ng-show="_view_file_directive">+</i>
+            </h2>
+            <ul ng-hide="_view_file_directive">
+              <li>
+                <a href="-_view.file_.view-file.html">view-file</a>
+              </li>
+            </ul>
+          </ul>
+        </li>
+      </ul>
+      </div>
+    </nav>
+    <div id="content" class="page-wrap">
+      <h3 style="float:right; color:#ccc">
+        Angular directive
+      </h3>
+      <h1 class="title">
+        view-file
+        <a class="name-link signature-attributes" href="source/'view.file'.view-file.html#line1">source</a>
+        <a class="name-link signature-attributes" href="templates/_view-file-ng_view-file.html">template</a>
+      </h1>
+      <div id="main" class="big-container">
+        <!-- source code html -->
+        <!-- index.html -->
+        <!-- class files -->
+        <div>
+          <div><div class="container-overview">
+  <ul class="chips">
+  </ul>
+  <div class="clearfix"></div>
+  <div class="description">
+    <h4>Description</h4>
+    <p>Angular directive for viewing files. Leverages a.o. highlightjs, json-explorer, sanitize, videogular, x2js.</p>
+  </div>
+  <div class="details"></div>
+  <div>
+    <h4>Attributes</h4>
+    <table class="params">
+      <thead>
+        <tr><th>Name</th><th>Type</th><th class="last">Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name" nowrap="">uri</td>
+          <td class="type"><span class="param-type">
+            String
+          </span></td>
+          <td class="description last">
+            <span>
+              <p>Required. Url of file to be viewed.</p>
+            </span>
+          </td>
+        </tr><tr>
+          <td class="name" nowrap="">content-type</td>
+          <td class="type"><span class="param-type">
+            String
+          </span></td>
+          <td class="description last">
+            <span>
+              <p>Required. Mime-type of file to be viewed.</p>
+            </span>
+          </td>
+        </tr><tr>
+          <td class="name" nowrap="">download-uri</td>
+          <td class="type"><span class="param-type">
+            String
+          </span></td>
+          <td class="description last">
+            <span>
+              <p>Optional. Url of file for download purpose. Default: null.</p>
+            </span>
+          </td>
+        </tr><tr>
+          <td class="name" nowrap="">file-name</td>
+          <td class="type"><span class="param-type">
+            String
+          </span></td>
+          <td class="description last">
+            <span>
+              <p>Optional. Filename for display. Default: uri portion after last /.</p>
+            </span>
+          </td>
+        </tr><tr>
+          <td class="name" nowrap="">allow-modal</td>
+          <td class="type"><span class="param-type">
+            Boolean
+          </span></td>
+          <td class="description last">
+            <span>
+              <p>Optional. Allow opening of file in modal overlay. Default: true.</p>
+            </span>
+          </td>
+        </tr><tr>
+          <td class="name" nowrap="">controls</td>
+          <td class="type"><span class="param-type">
+            Boolean
+          </span></td>
+          <td class="description last">
+            <span>
+              <p>Optional. Show controls on left. Default: true if download-uri or allow-modal.</p>
+            </span>
+          </td>
+        </tr><tr>
+          <td class="name" nowrap="">show-code</td>
+          <td class="type"><span class="param-type">
+            Boolean
+          </span></td>
+          <td class="description last">
+            <span>
+              <p>Optional. Show raw code initially for JSON, HTML, Text, and XML. Default: false.</p>
+            </span>
+          </td>
+        </tr><tr>
+          <td class="name" nowrap="">trust-uri</td>
+          <td class="type"><span class="param-type">
+            Boolean
+          </span></td>
+          <td class="description last">
+            <span>
+              <p>Optional. Apply trustAsResourceUrl on uri (not recommended). Default: false.</p>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h4>Example</h4>
+    <pre class="prettyprint"><code><span class="str">&lt;view-file uri="ctrl.viewUri" download-uri="ctrl.downloadUri" content-type="ctrl.contentType"
+    file-name="ctrl.fileName" allow-modal="true" controls="true" show-code="false" trust-uri="false">
+  &lt;/view-file></span></code></pre>
+  </div>
+</div></div>
+        </div>
+      </div>
+      <footer style="clear:both">
+        Documentation generated by
+        <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a>
+        using
+        <a href="https://github.com/allenhwkim/angular-jsdoc">Angular-JSDoc template</a>
+      </footer>
+    </div>
+    <script src="js/prettify.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/site.js"></script>
+    <!--%= prettyJson %-->
+    <script>
+      prettyPrint();
+      var lineNo = window.location.hash.match(/#line([0-9]+)$/);
+      lineNo && document.querySelector("ol li:nth-child("+(lineNo[1])+")").scrollIntoView();
+    </script>
+  </body>
+</html>

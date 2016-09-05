@@ -11,6 +11,30 @@
       <input placeholder="Filter" id="filter-input" class="col12 block field" type="text">
       <div class="nav-wrapper">
       <h2><a href="index.html">Index</a></h2>
+      <ul class="module">
+        <!-- _view_file_ -->
+        <h2 class="module">
+          <a chref="" ng-click="module_view_file_ = !module_view_file_">
+            module: 'view.file'
+          </a>
+          <i ng-cloak="" ng-show="module_view_file_">+</i>
+        </h2>
+        <li id="'view.file'" ng-hide="module_view_file_">
+          <ul class="group">
+            <h2>
+              <a href="" ng-click="_view_file_directive = !_view_file_directive">
+                directive
+              </a>
+              <i ng-cloak="" ng-show="_view_file_directive">+</i>
+            </h2>
+            <ul ng-hide="_view_file_directive">
+              <li>
+                <a href="-_view.file_.view-file.html">view-file</a>
+              </li>
+            </ul>
+          </ul>
+        </li>
+      </ul>
       </div>
     </nav>
     <div id="content" class="page-wrap">
