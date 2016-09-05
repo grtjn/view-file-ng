@@ -1,0 +1,67 @@
+{
+  "name": "view-file-ng",
+  "version": "0.1.0",
+  "description": "Angular directive for previewing files",
+  "main": [
+    "dist/view-file-ng.js",
+    "dist/view-file-ng.css"
+  ],
+  "dependencies": {
+    "angular": ">1.3.1",
+    "angular-x2js": "*",
+    "bootstrap": "~3.3.5",
+    "font-awesome": "^4.6.3",
+    "highlightjs": "~8.7.0",
+    "ng-json-explorer": "8c2a0f9104",
+    "vkbeautify-wrapper": "*",
+    "angular-sanitize": ">1.3.1",
+    "videogular": "^1.4.4",
+    "videogular-controls": "^1.4.4",
+    "videogular-themes-default": "^1.4.4",
+    "angular-recursion": "^1.0.5"
+  },
+  "overrides": {
+    "highlightjs": {
+      "main": [
+        "highlight.pack.js",
+        "styles/github.css"
+      ]
+    }
+  },
+  "devDependencies": {
+    "angular-mocks": ">1.2.14"
+  },
+  "moduleType": [
+    "globals"
+  ],
+  "authors": [
+    "grtjn"
+  ],
+  "homepage": "http://grtjn.github.io/view-file-ng/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/grtjn/view-file-ng.git"
+  },
+  "keywords": [
+    "angular",
+    "angularjs",
+    "view",
+    "file"
+  ],
+  "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    ".tmp",
+    "build",
+    "test",
+    "coverage",
+    "gulpfile.js",
+    "karma.conf.js",
+    "package.json"
+  ],
+  "resolutions": {
+    "angular": ">1.3.1"
+  }
+}

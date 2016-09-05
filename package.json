@@ -1,0 +1,28 @@
+{
+  "name": "view-file-ng.gh-pages",
+  "version": "0.0.1",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "3.8.x",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.2.0",
+    "gulp-flatten": "^0.1.0",
+    "gulp-if": "^1.2.5",
+    "gulp-less": "^1.2.3",
+    "gulp-minify-css": "^1.1.6",
+    "gulp-minify-html": "^0.1.6",
+    "gulp-ng-html2js": "^0.1.8",
+    "gulp-print": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.3",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^0.2.1",
+    "gulp-useref": "^1.2.0",
+    "wiredep": "2.2.1",
+    "gulp-webserver": "^0.9.1"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "private": true
+}

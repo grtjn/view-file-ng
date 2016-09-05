@@ -1,0 +1,215 @@
+BOOKMARKS: Installation Guide for All Platforms Table of Contents 1.0 Requirements and Database Compatibility 1.1 Introduction 1.2 MarkLogic Server Assumptions 1.3 Memory, Disk Space, and Swap Space Requirements 1.4 Supported Platforms 1.5 Certified Filesystems 1.6 Upgrades and Database Compatibility 1.6.1 Prerequisites for Application Services Portion of the Upgrade 1.6.2 MarkLogic 8 Databases are Compatible With MarkLogic 6 and MarkLogic 7 1.6.3 MarkLogic 8 Database Compatibility With MarkLogic 5 2.0 Procedures 2.1 Upgrading from Previous Releases 2.1.1 Note That Reindexing is On By Default 2.1.2 Upgrading from Release 8.0-1 or Later 2.1.3 Upgrading from Release 7.0, 6.0, Or 5.0 2.1.4 Upgrading from Release 4.2 or earlier 2.2 Installing MarkLogic Server 2.3 Starting MarkLogic Server 2.4 Configuring the First and Subsequent Hosts 2.4.1 Configuring a Single Host or the First Host in a Cluster 2.4.2 Configuring an Additional Host in a Cluster 2.4.3 Leaving a Cluster and Becoming a Single Host 2.5 Entering a License Key 2.6 Checking for the Correct Software Version 2.7 Configuring MarkLogic Server on UNIX Systems to Run as a Non-daemon User 2.8 Removing MarkLogic Server 3.0 Copyright COPYRIGHT 4.0 Technical Support
+
+Page 1 MarkLogic Server
+
+Installation Guide for All Platforms
+
+1
+
+Copyright © 2015 MarkLogic Corporation. All rights reserved.
+
+MarkLogic 8 February, 2015
+
+Last Revised: 8.0-1, February, 2015 Page 2 MarkLogic Server Table of Contents
+
+Table of Contents
+
+Installation Guide for All Platforms
+
+1.0 Requirements and Database Compatibility ....................................................3 1.1 Introduction .............................................................................................................3 1.2 MarkLogic Server Assumptions .............................................................................4 1.3 Memory, Disk Space, and Swap Space Requirements ...........................................4 1.4 Supported Platforms ...............................................................................................6 1.5 Certified Filesystems ..............................................................................................7 1.6 Upgrades and Database Compatibility ...................................................................7 1.6.1 Prerequisites for Application Services Portion of the Upgrade ..................8 1.6.2 MarkLogic 8 Databases are Compatible With MarkLogic 6 and MarkLogic 7 9 1.6.3 MarkLogic 8 Database Compatibility With MarkLogic 5 ..........................9
+
+2.0 Procedures ....................................................................................................10 2.1 Upgrading from Previous Releases .......................................................................10 2.1.1 Note That Reindexing is On By Default ...................................................10 2.1.2 Upgrading from Release 8.0-1 or Later ....................................................11 2.1.3 Upgrading from Release 7.0, 6.0, Or 5.0 ..................................................12 2.1.4 Upgrading from Release 4.2 or earlier ......................................................13 2.2 Installing MarkLogic Server .................................................................................14 2.3 Starting MarkLogic Server ...................................................................................18 2.4 Configuring the First and Subsequent Hosts ........................................................19 2.4.1 Configuring a Single Host or the First Host in a Cluster ..........................19 2.4.2 Configuring an Additional Host in a Cluster ............................................21 2.4.3 Leaving a Cluster and Becoming a Single Host .......................................23 2.5 Entering a License Key .........................................................................................24 2.6 Checking for the Correct Software Version .........................................................24 2.7 Configuring MarkLogic Server on UNIX Systems to Run as a Non-daemon User . 25 2.8 Removing MarkLogic Server ...............................................................................28
+
+3.0 Copyright .....................................................................................................30 3.0 COPYRIGHT ........................................................................................................30
+
+4.0 Technical Support ........................................................................................31
+
+MarkLogic 8—February, 2015 Installation Guide for All Platforms—Page 2 Page 3 MarkLogic Server Requirements and Database Compatibility
+
+1.0 Requirements and Database Compatibility This chapter introduces MarkLogic Server, lists the product requirements and supported platforms, and describes the database compatibility with previous releases. It includes the following sections:
+
+• Introduction
+
+• MarkLogic Server Assumptions
+
+• Memory, Disk Space, and Swap Space Requirements
+
+• Supported Platforms
+
+• Certified Filesystems
+
+• Upgrades and Database Compatibility
+
+1.1 Introduction 9 MarkLogic Server is a powerful NoSQL database for harnessing your digital content base, complete with Enterprise features demanded by real world, mission-critical applications. MarkLogic enables you to build complex applications that interact with large volumes of content in JSON, XML, SGML, HTML, and other popular content formats, as well as binary formats. The unique architecture of MarkLogic ensures that your applications are both scalable and high-performance, delivering query results at search-engine speeds while providing transactional integrity over the underlying content repository. MarkLogic can be configured for a distributed environment, enabling you to scale your infrastructure through hardware expansion.
+
+This installation guide explains the procedures needed to install MarkLogic on your system. It is intended for a technical audience, specifically an IT staff with experience in JSON and XML. This document only explains how to install the software, not how to use the software. To learn how to get started using the software, see the rest of the MarkLogic documentation (available on docs.marklogic.com), including the following documents:
+
+• Getting Started With MarkLogic Server
+
+• MarkLogic Server Administrator’s Guide
+
+• MarkLogic Server Application Developer’s Guide
+
+• MarkLogic Server Search Developer’s Guide
+
+• JavaScript Reference Guide
+
+• MarkLogic XQuery and XSLT Function Reference
+
+• MarkLogic Server Release Notes
+
+MarkLogic 8—February, 2015 Installation Guide for All Platforms—Page 3 Page 4 MarkLogic Server Requirements and Database Compatibility
+
+1.2 MarkLogic Server Assumptions When MarkLogic installs, it sets memory and other settings based on the size of the computer in which it is running. MarkLogic is a scalable, multi-threaded server product, and as such it assumes it has the entire machine available to it, including the cpu and disk I/O capacity. It is important to follow the guidelines set up in this chapter. Furthermore, MarkLogic assumes there is only one MarkLogic Server process running on any given machine, so it is not recommended to run multiple instances of MarkLogic on a single machine.
+
+1.3 Memory, Disk Space, and Swap Space Requirements Before installing the software, be sure that your system meets the following requirements:
+
+• 512 MB of system memory, minimum. 2 GB or more recommended, depending on database size.
+
+The first time it runs, MarkLogic Server automatically configures itself to the amount of memory on the system, reserving as much as it can for its own use. If you need to change the default configuration, you can manually override these defaults at a later time using the Admin Interface.
+
+• 1.5 times the disk space of the total forest size. Specifically, each forest on a filesystem requires its filesystem to have at least 1.5 times the forest size in disk space (or , for each forest less than 32GB, 3 times the forest size) when the merge max size database merge setting is set to the default of 32GB. This translates to 1.5 times the disk space of the source content after it is loaded.
+
+For example, if you plan on loading content that will result in a 100 GB database, reserve at least 150 GB of disk space. The disk space reserve is required for merges.
+
+• On Linux systems, swap space equal to the amount of physical memory on the machine. MarkLogic also recommends setting Linux Huge Pages on Red Hat 5 and Red Hat 6 systems to 3/8 the size of your physical memory. For details on setting up Huge Pages, see http://magazine.redhat.com/2007/05/29/how-do-i-set-up-hugepages-in-red-hat-enterprise-linux-4/.
+
+If you have Huge Pages set up on a Linux system, your swap space on that machine should be equal to the size of your physical memory minus the size of your Huge Page (because Linux Huge Pages are not swapped). For example, if you have 64GB of physical memory, and if you have Huge Pages set to 24 GB, then you need swap space of 40 GB (64 - 24).
+
+At system startup on Linux machines, MarkLogic Server logs a message to the ErrorLog.txt file showing the Huge Page size, and the message indicates if the size is below the recommended level.
+
+If you are using Red Hat 6, you must turn off Transparent Huge Pages (Transparent Huge Pages are configured automatically by the operating system).
+
+MarkLogic 8—February, 2015 Installation Guide for All Platforms—Page 4 Page 5 MarkLogic Server Requirements and Database Compatibility
+
+• On Windows systems twice the physical memory is also recommended for the swap (page) file. You configure this in the System Control Panel > Advanced system settings > Performance Settings > Advanced tab. Set the Virtual memory settings on that tab to twice your physical memory.
+
+• On Solaris systems, swap space at least equal to the amount of physical memory on the machine. Swap space equal to twice the amount of physical memory is highly recommended.
+
+For example, if you have a Solaris machine with 32 GB of memory, you should ideally configure the swap space to be 64 GB (and at least 32 GB).
+
+MarkLogic 8—February, 2015 Installation Guide for All Platforms—Page 5 Page 6 MarkLogic Server Requirements and Database Compatibility
+
+1.4 Supported Platforms MarkLogic Server is supported on the following platforms:
+
+• Microsoft Windows Server 2012 (x64), Microsoft Windows Server 2008 (x64), Windows 7 and 8 64-bit (x64)*
+
+• Sun Solaris 10 (x64)
+
+• Red Hat Enterprise Linux 6 (x64)** *** ****
+
+• SUSE Linux Enterprise Server 11 (x64)** ***
+
+• CentOS 6 (x64)** ***
+
+• Amazon Linux 2013.03 (x64)** ***
+
+• Mac OS X 10.8 or 10.9*****
+
+* Microsoft Windows 7 and Windows 8 are supported for development only. If MarkLogic Server fails to start up on Windows with the error “the application failed to initialize properly (0xc0150002)”, then a dependency is missing from your environment and you need to download and install the following DLL for 64-bit versions of Windows: http://www.microsoft.com/downloads/details.aspx?FamilyID=eb4ebe2d-33c0-4a47-9dd4-b9a6d7bd44da& DisplayLang=en. Additionally, if you get an error on startup saying you need MSVCR100.dll, the install the Microsoft Visual C++ 2010 SP1 Redistributable Package (x64) http://www.microsoft.com/en-us/download/details.aspx?id=13523.
+
+** The deadline I/O scheduler is required on Red Hat Linux platforms. The deadline scheduler is optimized to ensure efficient disk I/O for multi-threaded processes, and MarkLogic Server can have many simultaneous threads. For information on the deadline scheduler, see the Red Hat documentation (for example, http://www.redhat.com/magazine/008jun05/features/schedulers/).
+
+***The redhat-lsb, glibc, and gdb packages are required on Red Hat Linux. Additionally, on 64-bit Red Hat Linux, both the 32-bit and the 64-bit glibc packages are required.
+
+****Red Hat Linux 6 (x64) is also supported in a VMWare ESXi 5.0 (installed on bare metal) environment.
+
+*****Mac OS X is supported for development only. Conversion (Office and PDF) and entity enrichment are not available on Mac OS X. Mac OS X 10.8 or 10.9 (Mountain Lion or Mavericks) on a 64-bit capable processor is required (http://support.apple.com/kb/HT3696).
+
+MarkLogic 8—February, 2015 Installation Guide for All Platforms—Page 6 Page 7 MarkLogic Server Requirements and Database Compatibility
+
+1.5 Certified Filesystems MarkLogic relies on the operating system for filesystem operations. While any filesystem that works properly (including under heavy load) should work, the following table lists the operating systems along with the filesystems under which they are certified. Other filesystems may work but have not been thoroughly tested by MarkLogic.
+
+Operating System Certified Filesystems
+
+Linux (all varieties) EXT3, EXT4, as well as the clustered filesystems for shared-disk failover mentioned in Requirements for Shared-Disk Failover in the Scalability, Availability, and Failover Guide.
+
+Warning Do not use data=writeback with EXT3 and EXT4 filesystems.
+
+Sun Solaris
+
+Windows
+
+Mac OS
+
+All
+
+NAS is certified on Red Hat 6 and NetAPP.
+
+UFS, as well as the clustered filesystems for shared-disk failover mentioned in Requirements for Shared-Disk Failover in the Scalability, Availability, and Failover Guide.
+
+NTFS
+
+HFS+
+
+Hadoop HDFS, Amazon S3 (no journaling with S3)
+
+Additionally, HDFS storage is certified with MarkLogic on the following HDFS platform:
+
+• Cloudera CDH version 4.3
+
+1.6 Upgrades and Database Compatibility MarkLogic 8 supports upgrades from MarkLogic 5, MarkLogic 6, or from MarkLogic 7 or later databases. If you are upgrading from an earlier version of MarkLogic Server, you must first upgrade to 5, 6, or 7 before moving to MarkLogic 8. For the procedure for upgrading, see “Upgrading from Previous Releases” on page 10.
+
+During the upgrade, the security database, the schemas database, and the configuration files are automatically upgraded. The security database is upgraded with the latest execute privileges and the schemas database is upgraded with the latest version of the schemas used by MarkLogic Server. The upgrade occurs as part of the installation procedure.
+
+Databases that contain your own content are also upgraded to work with MarkLogic 8; once you upgrade to MarkLogic 8, you will no longer be able to use that database with previous versions of MarkLogic. MarkLogic Corporation strongly recommends performing a backup of your
+
+MarkLogic 8—February, 2015 Installation Guide for All Platforms—Page 7 Page 8 MarkLogic Server Requirements and Database Compatibility
+
+databases before upgrading to MarkLogic 8. Additionally, MarkLogic Corporation recommends that you first upgrade to the latest maintenance release of the major version of MarkLogic you are running before upgrading to MarkLogic 8.
+
+For the procedure for upgrading to MarkLogic 8, see “Upgrading from Previous Releases” on page 10. For details about known incompatibilities between MarkLogic 7 and MarkLogic 8, see Known Incompatibilities with Previous Releases in the Release Notes.
+
+This section contains database compatibility information between various releases, and includes the following sections.
+
+• Prerequisites for Application Services Portion of the Upgrade
+
+• MarkLogic 8 Databases are Compatible With MarkLogic 6 and MarkLogic 7
+
+• MarkLogic 8 Database Compatibility With MarkLogic 5
+
+1.6.1 Prerequisites for Application Services Portion of the Upgrade When Upgrading from releases prior to MarkLogic 5 to MarkLogic 8, the upgrade reconfigures the Docs and App Services App Servers, which by default are on port 8000 and port 8002 in older releases. In order for those App Servers to be upgraded, the following conditins must be met:
+
+• Either no App Server is running on port 8000 or the App Server on port 8000 has a root of Docs/.
+
+• Either no App Server is running on port 8002 or the App Server on port 8002 has a root of Apps/ or Apps/appbuilder.
+
+If the above conditions are met, then those App Servers are reconfigured during the MarkLogic 8 upgrade and the resulting configurations have the following settings:
+
+App-Services:
+
+App-Services App Server
+
+Port
+
+Name
+
+Root
+
+Error Handler
+
+URL Rewriter
+
+Database
+
+8000
+
+App-Services
+
+Apps/
+
+error-handler.xqy
+
+rewriter.xqy
+
+App-Services
+
+MarkLogic 8—February, 2015 Installation Guide for All Platforms—Page 8 Page 9 MarkLogic Server
+
+Manage:
+
+Requirements and Database Compatibility
+
+Manage App Server
+
+Port 8002
