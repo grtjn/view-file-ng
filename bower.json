@@ -50,7 +50,8 @@
     "highlightjs",
     "json-explorer",
     "videogular",
-    "x2js"
+    "x2js",
+    "marklogic"
   ],
   "license": "Apache-2.0",
   "ignore": [
