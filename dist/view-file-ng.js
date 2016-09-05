@@ -451,12 +451,12 @@ module.run(['$templateCache', function($templateCache) {
     '      <!-- object, recurse -->\n' +
     '      <dd ng-if="!(val | isArray)">\n' +
     '        <!--span ng-init="json = val" ng-include="\'/view-file-ng/friendly-json.html\'"></span-->\n' +
-    '        <friendly-json--recursion json="val"></friendly-json--recursion>\n' +
+    '        <friendly-json json="val"></friendly-json>\n' +
     '      </dd>\n' +
     '      <!-- array of object, repeat recurse -->\n' +
     '      <dd ng-if="(val | isArray) && (val[0] | isObject)" ng-repeat="v in val track by $index">\n' +
     '        <!--span ng-repeat="json in val track by $index" ng-include="\'/view-file-ng/friendly-json.html\'"></span-->\n' +
-    '        <friendly-json--recursion json="v"></friendly-json--recursion>\n' +
+    '        <friendly-json json="v"></friendly-json>\n' +
     '      </dd>\n' +
     '    </span>\n' +
     '  </span>\n' +
