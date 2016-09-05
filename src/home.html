@@ -11,6 +11,7 @@
   <h4>Examples</h4>
   <div class="row" ng-repeat="file in ctrl.files">
     <div class="col-md-10 col-md-offset-1">
+      <h5>{{ file.uri.split('/').pop() }} - {{ file.type }}</h5>
       <view-file uri="file.uri" content-type="file.type" download-uri="file.uri"></view-file>
     </div>
   </div>
