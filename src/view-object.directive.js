@@ -12,10 +12,6 @@
   *
   * @example
   * <view-object data="ctrl.viewUri" type="ctrl.contentType" height="'600px'" width="'100%'"></view-object>
-  * 
-  * or
-  * 
-  * <friendly-xml xml="ctrl.xml"></friendly-xml>
   */
 
 (function () {
