@@ -11,7 +11,7 @@
     "angular-x2js": "*",
     "bootstrap": "~3.3.5",
     "font-awesome": "^4.6.3",
-    "highlightjs": "~8.7.0",
+    "angular-highlightjs": "^0.6.1",
     "ng-json-explorer": "8c2a0f9104",
     "vkbeautify-wrapper": "*",
     "angular-sanitize": ">1.3.1",
