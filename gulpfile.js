@@ -124,9 +124,22 @@ gulp.task('images', ['minify'], function () {
   ;
 });
 
-gulp.task('fonts', ['images'], function () {
+gulp.task('videogular-fonts', ['images'], function () {
   return gulp.src([
-      'bower_components/**/fonts/**/*.*'
+      'bower_components/**/fonts/**/videogular.*'
+    ])
+    .pipe(flatten())
+    .pipe(gulp.dest('./styles/fonts/'))
+    .pipe(info(function(filepath) {
+      return 'writing: ' + filepath;
+    }))
+  ;
+});
+
+gulp.task('fonts', ['videogular-fonts'], function () {
+  return gulp.src([
+      'bower_components/**/fonts/**/*.*',
+      '!bower_components/**/fonts/**/videogular.*'
     ])
     .pipe(flatten())
     .pipe(gulp.dest('./fonts/'))
