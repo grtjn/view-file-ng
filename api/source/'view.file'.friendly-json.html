@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <base href="../">
-    <title>JSDoc: source : view-file.directive.js</title>
+    <title>JSDoc: source : friendly-json.directive.js</title>
     <link href="css/prettify-tomorrow.css" type="text/css" rel="stylesheet">
     <link href="css/site.css" type="text/css" rel="stylesheet">
   </head>
@@ -60,7 +60,7 @@
     </nav>
     <div id="content" class="page-wrap">
       <h1 class="title">
-        source : view-file.directive.js
+        source : friendly-json.directive.js
       </h1>
       <div id="main" class="big-container">
         <!-- source code html -->
@@ -68,85 +68,60 @@
           <pre class="prettyprint source linenums"><code> /**
   * @ngdoc directive
   * @memberOf 'view.file'
-  * @name view-file
+  * @name friendly-json
   * @description
-  *   Angular directive for viewing files. Leverages a.o. highlightjs, json-explorer, sanitize, videogular, x2js.
+  *   Angular directive for rendering nested JSON structures in a user-friendly way.
   *
-  * @attr {String}    uri           Required. Url of file to be viewed.
-  * @attr {String}    content-type  Required. Mime-type of file to be viewed.
-  * @attr {String}    download-uri  Optional. Url of file for download purpose. Default: null.
-  * @attr {String}    file-name     Optional. Filename for display. Default: uri portion after last /.
-  * @attr {Boolean}   allow-modal   Optional. Allow opening of file in modal overlay. Default: true.
-  * @attr {Boolean}   controls      Optional. Show controls on left. Default: true if download-uri or allow-modal.
-  * @attr {Boolean}   show-code     Optional. Show raw code initially for JSON, HTML, Text, and XML. Default: false.
-  * @attr {Boolean}   trust-uri     Optional. Apply trustAsResourceUrl on uri (not recommended). Default: false.
+  * @attr {String}    uri           Optional. Url of JSON file to be rendered. Url must be trusted upfront.
+  * @attr {String}    json          Optional. JSON contents to be rendered. Do not use together with uri.
   *
   * @example
-  * &lt;view-file uri="ctrl.viewUri" download-uri="ctrl.downloadUri" content-type="ctrl.contentType"
-  *   file-name="ctrl.fileName" allow-modal="true" controls="true" show-code="false" trust-uri="false">
-  * &lt;/view-file>
+  * &lt;friendly-json uri="ctrl.viewUri">&lt;/friendly-json>
+  * 
+  * or
+  * 
+  * &lt;friendly-json json="ctrl.json">&lt;/friendly-json>
   */
 (function () {
   'use strict';
   angular.module('view.file')
-  .directive('viewFile', viewFileDirective);
-  function viewFileDirective() {
-    function isTrue(b, def) {
-      if (b !== undefined) {
-        return b === true || b === 'true';
-      } else {
-        return def;
-      }
-    }
-    function getFileType(contentType) {
-      var type = 'other';
-      if (/\/[x]?html/.test(contentType)) {
-        type = 'html';
-      } else if (/[\+\/]json$/.test(contentType)) {
-        type = 'json';
-      } else if (/[\+\/]xml$/.test(contentType)) {
-        type = 'xml';
-      } else if (/^(audio|image|text|video|xml)\//.test(contentType)) {
-        type = contentType.split('/')[0];
-      } else if (/^application\//.test(contentType)) {
-        // TODO
-      }
-      return type;
-    }
+  .directive('friendlyJson', friendlyJsonDirective)
+  .filter('isObject', function() {
+    return function(val) {
+      return angular.isObject(val);
+    };
+  })
+  .filter('isArray', function() {
+    return function(val) {
+      return angular.isArray(val);
+    };
+  })
+  .filter('isFunction', function() {
+    return function(val) {
+      return angular.isFunction(val);
+    };
+  });
+  friendlyJsonDirective.$inject = ['RecursionHelper'];
+  function friendlyJsonDirective(RecursionHelper) {
     return {
       restrict: 'E',
-      controller: 'ViewFileCtrl',
+      controller: 'FriendlyJsonCtrl',
       controllerAs: 'ctrl',
       scope: {
-        uri: '=',
-        downloadUri: '=?',
-        contentType: '=',
-        fileName: '=?',
-        _allowModal: '@allowModal',
-        _controls: '@controls',
-        _showCode: '@showCode',
-        _trustUri: '@trustUri'
+        uri: '=?',
+        json: '=?'
       },
-      templateUrl: '/view-file-ng/view-file.html',
-      link: function ($scope, $elem, $attrs, ctrl) {
-        $scope.allowModal = isTrue($scope._allowModal, true);
-        $scope.controls = isTrue($scope._controls, $scope.allowModal || !!$scope.downloadUri);
-        $scope.showCode = isTrue($scope._showCode, false);
-        $scope.trustUri = isTrue($scope._trustUri, false);
-        $scope.loading = true;
-        $scope.$watch('uri', function(newUri) {
-          if (newUri) {
-            $scope.fileName = $scope.fileName || newUri.split('/').pop();
-            $scope.fileType = getFileType($scope.contentType);
-            if ($scope.trustUri) {
-              ctrl.trustUri(newUri);
+      templateUrl: '/view-file-ng/friendly-json.html',
+      compile: function(element) {
+        // Use the compile function from the RecursionHelper,
+        // And return the linking function(s) which it returns
+        return RecursionHelper.compile(element, function ($scope, $elem, $attrs, ctrl) {
+          $scope.loading = true;
+          $scope.$watch('uri', function(newUri) {
+            if (newUri) {
+              ctrl.load(newUri);
             }
-            if ($scope.fileType === 'xml') {
-              ctrl.loadHljs(newUri);
-            } else {
-              $scope.loading = false;
-            }
-          }
+          });
         });
       }
     };

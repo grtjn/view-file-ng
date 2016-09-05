@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>JSDoc: view-file</title>
+    <title>JSDoc: friendly-xml</title>
     <link href="css/prettify-tomorrow.css" type="text/css" rel="stylesheet">
     <link href="css/site.css" type="text/css" rel="stylesheet">
   </head>
@@ -62,9 +62,9 @@
         Angular directive
       </h3>
       <h1 class="title">
-        view-file
-        <a class="name-link signature-attributes" href="source/'view.file'.view-file.html#line1">source</a>
-        <a class="name-link signature-attributes" href="templates/_view-file-ng_view-file.html">template</a>
+        friendly-xml
+        <a class="name-link signature-attributes" href="source/'view.file'.friendly-xml.html#line1">source</a>
+        <a class="name-link signature-attributes" href="templates/_view-file-ng_friendly-json.html">template</a>
       </h1>
       <div id="main" class="big-container">
         <!-- source code html -->
@@ -77,7 +77,7 @@
   <div class="clearfix"></div>
   <div class="description">
     <h4>Description</h4>
-    <p>Angular directive for viewing files. Leverages a.o. highlightjs, json-explorer, sanitize, videogular, x2js.</p>
+    <p>Angular directive for rendering nested JSON structures in a user-friendly way.</p>
   </div>
   <div class="details"></div>
   <div>
@@ -94,77 +94,17 @@
           </span></td>
           <td class="description last">
             <span>
-              <p>Required. Url of file to be viewed.</p>
+              <p>Optional. Url of XML file to be rendered. Url must be trusted upfront.</p>
             </span>
           </td>
         </tr><tr>
-          <td class="name" nowrap="">content-type</td>
+          <td class="name" nowrap="">xml</td>
           <td class="type"><span class="param-type">
             String
           </span></td>
           <td class="description last">
             <span>
-              <p>Required. Mime-type of file to be viewed.</p>
-            </span>
-          </td>
-        </tr><tr>
-          <td class="name" nowrap="">download-uri</td>
-          <td class="type"><span class="param-type">
-            String
-          </span></td>
-          <td class="description last">
-            <span>
-              <p>Optional. Url of file for download purpose. Default: null.</p>
-            </span>
-          </td>
-        </tr><tr>
-          <td class="name" nowrap="">file-name</td>
-          <td class="type"><span class="param-type">
-            String
-          </span></td>
-          <td class="description last">
-            <span>
-              <p>Optional. Filename for display. Default: uri portion after last /.</p>
-            </span>
-          </td>
-        </tr><tr>
-          <td class="name" nowrap="">allow-modal</td>
-          <td class="type"><span class="param-type">
-            Boolean
-          </span></td>
-          <td class="description last">
-            <span>
-              <p>Optional. Allow opening of file in modal overlay. Default: true.</p>
-            </span>
-          </td>
-        </tr><tr>
-          <td class="name" nowrap="">controls</td>
-          <td class="type"><span class="param-type">
-            Boolean
-          </span></td>
-          <td class="description last">
-            <span>
-              <p>Optional. Show controls on left. Default: true if download-uri or allow-modal.</p>
-            </span>
-          </td>
-        </tr><tr>
-          <td class="name" nowrap="">show-code</td>
-          <td class="type"><span class="param-type">
-            Boolean
-          </span></td>
-          <td class="description last">
-            <span>
-              <p>Optional. Show raw code initially for JSON, HTML, Text, and XML. Default: false.</p>
-            </span>
-          </td>
-        </tr><tr>
-          <td class="name" nowrap="">trust-uri</td>
-          <td class="type"><span class="param-type">
-            Boolean
-          </span></td>
-          <td class="description last">
-            <span>
-              <p>Optional. Apply trustAsResourceUrl on uri (not recommended). Default: false.</p>
+              <p>Optional. XML contents to be rendered. Do not use together with uri.</p>
             </span>
           </td>
         </tr>
@@ -173,9 +113,9 @@
   </div>
   <div>
     <h4>Example</h4>
-    <pre class="prettyprint"><code><span class="str">&lt;view-file uri="ctrl.viewUri" download-uri="ctrl.downloadUri" content-type="ctrl.contentType"
-  file-name="ctrl.fileName" allow-modal="true" controls="true" show-code="false" trust-uri="false">
-&lt;/view-file></span></code></pre>
+    <pre class="prettyprint"><code><span class="str">&lt;friendly-xml uri="ctrl.viewUri">&lt;/friendly-xml>
+or
+&lt;friendly-xml xml="ctrl.xml">&lt;/friendly-xml></span></code></pre>
   </div>
 </div></div>
         </div>

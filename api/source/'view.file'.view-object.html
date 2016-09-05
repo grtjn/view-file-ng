@@ -2,7 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>JSDoc: Index</title>
+    <base href="../">
+    <title>JSDoc: source : view-object.directive.js</title>
     <link href="css/prettify-tomorrow.css" type="text/css" rel="stylesheet">
     <link href="css/site.css" type="text/css" rel="stylesheet">
   </head>
@@ -59,17 +60,49 @@
     </nav>
     <div id="content" class="page-wrap">
       <h1 class="title">
-        Index
+        source : view-object.directive.js
       </h1>
       <div id="main" class="big-container">
         <!-- source code html -->
+        <article>
+          <pre class="prettyprint source linenums"><code> /**
+  * @ngdoc directive
+  * @memberOf 'view.file'
+  * @name view-object
+  * @description
+  *   Angular directive for including HTML object tag dynamically.
+  *
+  * @attr {String}    data          Required. Url of file to be viewed. Url must be trusted upfront.
+  * @attr {String}    type          Optional. Mime-type of file to be viewed.
+  * @attr {String}    height        Optional. Height value to be applied to object tag.
+  * @attr {String}    width         Optional. Width value to be applied to object tag.
+  *
+  * @example
+  * &lt;view-object data="ctrl.viewUri" type="ctrl.contentType" height="'600px'" width="'100%'">&lt;/view-object>
+  * 
+  * or
+  * 
+  * &lt;friendly-xml xml="ctrl.xml">&lt;/friendly-xml>
+  */
+(function () {
+  'use strict';
+  angular.module('view.file')
+    .directive('viewObject', function() {
+      return {
+        restrict: 'E',
+        transclude: true,
+        link: function(scope, element, attrs) {
+          var data = ' data="' + scope.$eval(attrs.data) + '"';
+          var type = attrs.type ? (' type="' + scope.$eval(attrs.type) + '"') : '';
+          var height = attrs.height ? (' height="' + scope.$eval(attrs.height) + '"') : '';
+          var width = attrs.width ? (' width="' + scope.$eval(attrs.width) + '"') : '';
+          element.append('&lt;object " ' + height + width + type + data + ' ng-transclude>&lt;/object>');
+        }
+      };
+    });
+}());</code></pre>
+        </article>
         <!-- index.html -->
-        <section class="section-readme">
-          <article>
-            <h1>view.file</h1><p>Angular directive for previewing files.</p>
-<p>Click components on the right for details.</p>
-          </article>
-        </section>
         <!-- class files -->
       </div>
       <footer style="clear:both">

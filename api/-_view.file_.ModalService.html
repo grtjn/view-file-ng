@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JSDoc: ModalService</title>
+    <link href="css/prettify-tomorrow.css" type="text/css" rel="stylesheet">
+    <link href="css/site.css" type="text/css" rel="stylesheet">
+  </head>
+  <body ng-app="">
+    <nav id="toc">
+      <input placeholder="Filter" id="filter-input" class="col12 block field" type="text">
+      <div class="nav-wrapper">
+      <h2><a href="index.html">Index</a></h2>
+      <ul class="module">
+        <!-- _view_file_ -->
+        <h2 class="module">
+          <a chref="" ng-click="module_view_file_ = !module_view_file_">
+            module: 'view.file'
+          </a>
+          <i ng-cloak="" ng-show="module_view_file_">+</i>
+        </h2>
+        <li id="'view.file'" ng-hide="module_view_file_">
+          <ul class="group">
+            <h2>
+              <a href="" ng-click="_view_file_directive = !_view_file_directive">
+                directive
+              </a>
+              <i ng-cloak="" ng-show="_view_file_directive">+</i>
+            </h2>
+            <ul ng-hide="_view_file_directive">
+              <li>
+                <a href="-_view.file_.friendly-json.html">friendly-json</a>
+              </li><li>
+                <a href="-_view.file_.friendly-xml.html">friendly-xml</a>
+              </li><li>
+                <a href="-_view.file_.include-safe.html">include-safe</a>
+              </li><li>
+                <a href="-_view.file_.view-file.html">view-file</a>
+              </li><li>
+                <a href="-_view.file_.view-object.html">view-object</a>
+              </li>
+            </ul>
+          </ul><ul class="group">
+            <h2>
+              <a href="" ng-click="_view_file_service = !_view_file_service">
+                service
+              </a>
+              <i ng-cloak="" ng-show="_view_file_service">+</i>
+            </h2>
+            <ul ng-hide="_view_file_service">
+              <li>
+                <a href="-_view.file_.ModalService.html">ModalService</a>
+              </li>
+            </ul>
+          </ul>
+        </li>
+      </ul>
+      </div>
+    </nav>
+    <div id="content" class="page-wrap">
+      <h3 style="float:right; color:#ccc">
+        Angular service
+      </h3>
+      <h1 class="title">
+        ModalService
+        <a class="name-link signature-attributes" href="source/'view.file'.ModalService.html#line1">source</a>
+      </h1>
+      <div id="main" class="big-container">
+        <!-- source code html -->
+        <!-- index.html -->
+        <!-- class files -->
+        <div>
+          <div><div class="container-overview">
+  <ul class="chips">
+  </ul>
+  <div class="clearfix"></div>
+  <div class="description">
+    <h4>Description</h4>
+    <p>Angular helper service displaying, and handling modal overlays. Wraps around $uibModal.</p>
+  </div>
+  <div class="details"></div>
+  <div>
+    <h4>Parameters</h4>
+    <table class="params">
+      <thead>
+        <tr><th>Name</th><th>Type</th><th class="last">Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name" nowrap="">
+            <a id="$uibModal"></a>
+            $uibModal
+          </td>
+          <td class="type"><span class="param-type">
+            <a href="service.html">service</a>
+          </span></td>
+          <td class="description last">
+            <span>
+              <p>angular-bootstrap modal service</p>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="functions">
+  <h3 class="subsection-title">Methods</h3>
+  <dl>
+    <dt>
+      <a href="source/'view.file'.ModalService.html#line34" class="name-link" id="showModal">
+        <h4 class="name">
+          showModal
+          <span class="signature">(template, title, ctrl, validate, modalOptions)</span>
+          <span class="type-signature">
+            -&gt; Promise
+          </span>
+        </h4>
+      </a>
+    </dt>
+    <dd>
+      <div class="description">
+        <span>
+          <p>Show a modal for given template, title, and data.</p>
+        </span>
+      </div>
+      <div>
+        <h4>Parameters</h4>
+        <table class="params">
+          <thead>
+            <tr><th>Name</th><th>Type</th><th class="last">Description</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="name">template</td>
+              <td class="type"><span class="param-type">
+                String
+              </span></td>
+              <td class="description last">
+                <span>
+                  <p>Required. Url of modal template.</p>
+                </span>
+              </td>
+            </tr><tr>
+              <td class="name">title</td>
+              <td class="type"><span class="param-type">
+                String
+              </span></td>
+              <td class="description last">
+                <span>
+                  <p>Optional. Title for modal overlay.</p>
+                </span>
+              </td>
+            </tr><tr>
+              <td class="name">ctrl</td>
+              <td class="type"><span class="param-type">
+                Object
+              </span></td>
+              <td class="description last">
+                <span>
+                  <p>Optional. Object with data and callbacks for use on modal. For instance link to parent Ctrl.</p>
+                </span>
+              </td>
+            </tr><tr>
+              <td class="name">validate</td>
+              <td class="type"><span class="param-type">
+                function
+              </span></td>
+              <td class="description last">
+                <span>
+                  <p>Optional. Callback function to validate input before closing modal. Expected to return an Array of Strings.</p>
+                </span>
+              </td>
+            </tr><tr>
+              <td class="name">modalOptions</td>
+              <td class="type"><span class="param-type">
+                Object
+              </span></td>
+              <td class="description last">
+                <span>
+                  <p>Optional. Additional modal options.</p>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h4>Returns</h4>
+        <table class="params">
+          <thead>
+            <tr><th>Type</th><th class="last">Description</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="type">
+                <span class="param-type">
+                  <a href="Promise.html">Promise</a>
+                </span>
+              </td>
+              <td class="description last">
+                <span>
+                  <p>result        Promise for updated ctrl if ok was selected, or null if cancel.</p>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </dd>
+  </dl>
+</div></div>
+        </div>
+      </div>
+      <footer style="clear:both">
+        Documentation generated by
+        <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a>
+        using
+        <a href="https://github.com/allenhwkim/angular-jsdoc">Angular-JSDoc template</a>
+      </footer>
+    </div>
+    <script src="js/prettify.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/site.js"></script>
+    <!--%= prettyJson %-->
+    <script>
+      prettyPrint();
+      var lineNo = window.location.hash.match(/#line([0-9]+)$/);
+      lineNo && document.querySelector("ol li:nth-child("+(lineNo[1])+")").scrollIntoView();
+    </script>
+  </body>
+</html>
