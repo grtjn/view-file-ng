@@ -108859,7 +108859,7 @@ module.run(['$templateCache', function($templateCache) {
     '    </div>\n' +
     '\n' +
     '    <div class="download-control">\n' +
-    '      <a ng-if="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}"><i class="glyphicon glyphicon-download-alt"></i></a>\n' +
+    '      <a ng-if="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}" download><i class="glyphicon glyphicon-download-alt"></i></a>\n' +
     '    </div>\n' +
     '  </div>\n' +
     '\n' +
