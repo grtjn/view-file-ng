@@ -1,0 +1,24 @@
+<dl class="dl-horizontal">
+  <span ng-repeat="(key,val) in json track by $index" ng-hide="(val | isFunction) || (key.startsWith('_') && key !== '__text')">
+    <dt>{{ key.startsWith('__') ? key.replace('__', '') : key }}</dt>
+    <!-- simple value -->
+    <dd ng-if="!(val | isObject)">{{ val !== '' ? val : '&#160;' }}</dd>
+    <!-- array or object -->
+    <span ng-if="(val | isObject)">
+      <!-- array with simple values -->
+      <dd ng-if="(val | isArray) && !(val[0] | isObject)">{{ val.join(', ') }}</dd>
+      <!-- add nbsp for better alignment of values -->
+      <dd ng-if="!(val | isArray) || (val[0] | isObject)">&#160;</dd>
+      <!-- object, recurse -->
+      <dd ng-if="!(val | isArray)">
+        <!--span ng-init="json = val" ng-include="'/view-file-ng/friendly-json.html'"></span-->
+        <friendly-json--recursion json="val"></friendly-json--recursion>
+      </dd>
+      <!-- array of object, repeat recurse -->
+      <dd ng-if="(val | isArray) && (val[0] | isObject)" ng-repeat="v in val track by $index">
+        <!--span ng-repeat="json in val track by $index" ng-include="'/view-file-ng/friendly-json.html'"></span-->
+        <friendly-json--recursion json="v"></friendly-json--recursion>
+      </dd>
+    </span>
+  </span>
+</dl>

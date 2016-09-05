@@ -1,0 +1,11 @@
+<form class="form" role="form">
+  <div class="modal-header">
+    <h3 class="modal-title">{{ ctrl.fileName }}</h3>
+  </div>
+  <div ng-cloak class="modal-body clearfix">
+    <view-file uri="ctrl.uri" content-type="ctrl.contentType" controls="false" show-code="{{ctrl.showCode}}"></view-file>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary pull-right" ng-click="cancel()">Close</button>
+  </div>
+</form>

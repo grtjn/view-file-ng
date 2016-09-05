@@ -1,0 +1,20 @@
+{
+  "opts": {
+    "readme": "API-README.md",
+    "recurse": true,
+    "template": "node_modules/angular-jsdoc/angular-template",
+    "encoding": "utf8",
+    "destination": "./docs/api/"
+  },
+  "source": {
+    "include": [ "./src/" ]
+  },
+  "plugins": [
+    "node_modules/jsdoc/plugins/markdown",
+    "node_modules/angular-jsdoc/common/plugins/ngdoc"
+  ],
+  "templates": {
+    "cleverLinks": true,
+    "monospaceLinks": true
+  }
+}

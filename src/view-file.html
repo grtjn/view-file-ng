@@ -1,0 +1,74 @@
+<div class="view-file row" style="padding-right: 30px;">
+
+  <div class="col-sm-1 text-right" ng-if="controls && (((fileType === 'xml') || (fileType === 'json') || (fileType === 'html') || (fileType === 'text')) || allowModal || downloadUri)" class="pull-left controls">
+    <div class="code-control">
+      <a ng-if="(fileType === 'xml') || (fileType === 'json') || (fileType === 'html') || (fileType === 'text')" class="btn btn-default" ng-click="ctrl.toggleCode()">
+        <span ng-show="!showCode && ((fileType === 'json') || (fileType === 'text'))">{ }</span>
+        <i ng-show="!showCode && ((fileType === 'html') || (fileType === 'xml'))" class="fa fa-code"></i>
+        <i ng-show="showCode" class="fa fa-align-left"></i>
+      </a>
+    </div>
+
+    <div class="modal-control">
+      <a ng-if="allowModal && fileType !== 'audio'" class="btn btn-default" ng-click="ctrl.showModal()"><i class="glyphicon glyphicon-resize-full"></i></a>
+    </div>
+
+    <div class="download-control">
+      <a ng-if="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}"><i class="glyphicon glyphicon-download-alt"></i></a>
+    </div>
+  </div>
+
+  <div ng-class="{'col-sm-11': controls, 'col-sm-12': !controls}" style="min-height: 600px;">
+    <div class="loading" style="position: absolute;">
+      Loading... <i class="fa fa-spinner fa-spin"></i>
+    </div>
+
+    <div class="viewer" ng-if="!loading" style="position: absolute; width: 100%; min-height: 600px; background-color: white;">
+      <!-- audio / video -->
+      <videogular ng-if="fileType === 'audio' || fileType === 'video'" style="{{ fileType === 'audio' ? 'height: 50px;' : '' }}">
+        <vg-media vg-src="uri"></vg-media>
+        <vg-controls>
+          <vg-play-pause-button></vg-play-pause-button>
+          <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
+          <vg-scrub-bar>
+            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+          </vg-scrub-bar>
+          <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+          <vg-volume>
+            <vg-mute-button></vg-mute-button>
+            <vg-volume-bar></vg-volume-bar>
+          </vg-volume>
+          <vg-fullscreen-button ng-show="fileType === 'video'"></vg-fullscreen-button>
+        </vg-controls>
+      </videogular>
+
+      <!-- html / text -->
+      <div ng-if="(fileType === 'html') || (fileType === 'text')">
+        <div class="source" ng-show="!showCode" include-safe="uri"></div>
+        <hljs ng-show="showCode" hljs-include="uri"></hljs>
+      </div>
+
+      <!-- image -->
+      <img ng-if="fileType === 'image'" ng-src="{{uri}}">
+
+      <!-- json -->
+      <div ng-if="fileType === 'json'">
+        <friendly-json class="source" ng-show="!showCode" uri="uri"></friendly-json>
+        <json-explorer class="source" ng-show="showCode" url="uri"></json-explorer>
+      </div>
+
+      <!-- xml -->
+      <div ng-if="fileType === 'xml'">
+        <friendly-xml ng-show="!showCode" class="source" uri="uri"></friendly-xml>
+        <hljs ng-show="showCode" hljs-include="hljsUri"></hljs>
+      </div>
+
+      <!-- other -->
+      <view-object ng-if="fileType === 'other'" data="uri" type="contentType" height="'600px'" width="'100%'">
+        <a ng-show="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}">Download</a>
+        <div class="alert alert-danger" ng-show="!downloadUri">Alert: Cannot display this file!</div>
+      </view-object>
+    </div>
+  </div>
+
+</div>

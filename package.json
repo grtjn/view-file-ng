@@ -1,0 +1,57 @@
+{
+  "name": "d3-cloud-ng",
+  "version": "0.0.0",
+  "description": "Angular directive wrapping the d3-cloud library",
+  "dependencies": {},
+  "devDependencies": {
+    "angular-jsdoc": "^1.4.2",
+    "gulp": "^3.8.0",
+    "gulp-concat": "^2.2.0",
+    "gulp-cssnano": "^2.0.0",
+    "gulp-gh-pages": "git://github.com/sharvit/gulp-gh-pages.git",
+    "gulp-htmlmin": "^1.1.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-less": "^3.0.3",
+    "gulp-ng-html2js": "^0.2.0",
+    "gulp-print": "^2.0.1",
+    "gulp-rename": "^1.2.0",
+    "gulp-rm": "^1.0.0",
+    "gulp-sourcemaps": "^1.0.0",
+    "gulp-uglify": "^1.4.1",
+    "jasmine-core": "^2.3.4",
+    "jsdoc": "^3.4.0",
+    "jshint": "^2.0.0",
+    "jshint-stylish": "^2.0.0",
+    "karma": "^0.13.10",
+    "karma-coverage": "^0.5.2",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "phantomjs-prebuilt": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "Apache-2.0",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grtjn/d3-cloud-ng.git"
+  },
+  "keywords": [
+    "angular",
+    "angularjs",
+    "d3",
+    "d3-cloud"
+  ],
+  "author": "grtjn",
+  "bugs": {
+    "url": "https://github.com/grtjn/d3-cloud-ng/issues"
+  },
+  "homepage": "https://github.com/grtjn/d3-cloud-ng",
+  "private": true
+}
