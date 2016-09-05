@@ -18,7 +18,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/home.html',
-    '<h1 class="page-header" itemprop="name">View Files in Angular</h1><div class="home row"><h4>Key features</h4><ul><li>One directive to view files</li><li>Friendly content display of Audio, HTML, JSON, PDF, Text, Video, and XML</li><li>Pretty source display for JSON, HTML, Text, and XML</li><li>Optional controlbar with buttons for modal display and download</li></ul><h4>Examples</h4><div class="row" ng-repeat="file in ctrl.files"><div class="col-md-10 col-md-offset-1"><view-file uri="file.uri" type="file.type"></view-file></div></div></div>');
+    '<h1 class="page-header" itemprop="name">View Files in Angular</h1><div class="home row"><h4>Key features</h4><ul><li>One directive to view files</li><li>Friendly content display of Audio, HTML, JSON, PDF, Text, Video, and XML</li><li>Pretty source display for JSON, HTML, Text, and XML</li><li>Optional controlbar with buttons for modal display and download</li></ul><h4>Examples</h4><div class="row" ng-repeat="file in ctrl.files"><div class="col-md-10 col-md-offset-1"><view-file uri="file.uri" content-type="file.type"></view-file></div></div></div>');
 }]);
 })();
 
@@ -77,6 +77,6 @@ module.run(['$templateCache', function($templateCache) {
     '}\n' +
     '</pre></li><li><p>Add a <code>&lt;view-file&gt;</code> element in your template like so:</p><pre hljs="" no-escape="" language="html">\n' +
     '&lt;div ng-repeat="file in ctrl.files">\n' +
-    '  &lt;view-file uri="file.uri" type="file.type">&lt;/view-file></pre>&lt;/div></li></ol></div></div>');
+    '  &lt;view-file uri="file.uri" content-type="file.type">&lt;/view-file></pre>&lt;/div></li></ol></div></div>');
 }]);
 })();
