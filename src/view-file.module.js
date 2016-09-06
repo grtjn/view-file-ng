@@ -7,6 +7,7 @@
     'com.2fdevs.videogular',
     'com.2fdevs.videogular.plugins.controls',
     'hljs',
+    'ngJsonExplorer',
     'ngSanitize',
     'RecursionHelper'
   ]);
