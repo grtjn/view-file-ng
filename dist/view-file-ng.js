@@ -631,8 +631,8 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '    <div class="viewer" ng-if="!loading">\n' +
     '      <!-- audio / video -->\n' +
-    '      <div class="source">\n' +
-    '        <videogular ng-if="fileType === \'audio\' || fileType === \'video\'" style="{{ fileType === \'audio\' ? \'height: 70px;\' : \'\' }}">\n' +
+    '      <div class="source" ng-if="fileType === \'audio\' || fileType === \'video\'">\n' +
+    '        <videogular ng-class="fileType">\n' +
     '          <vg-media vg-src="uri"></vg-media>\n' +
     '          <vg-controls>\n' +
     '            <vg-play-pause-button></vg-play-pause-button>\n' +
