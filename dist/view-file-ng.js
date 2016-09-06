@@ -626,11 +626,11 @@ module.run(['$templateCache', function($templateCache) {
     '  </div>\n' +
     '\n' +
     '  <div class="viewer-wrapper" ng-class="{\'col-sm-11\': controls, \'col-sm-12\': !controls}">\n' +
-    '    <div class="loading">\n' +
+    '    <div class="loading" ng-show="loading">\n' +
     '      Loading... <i class="fa fa-spinner fa-spin"></i>\n' +
     '    </div>\n' +
     '\n' +
-    '    <div class="viewer" ng-if="!loading">\n' +
+    '    <div class="viewer" ng-hide="loading">\n' +
     '      <!-- audio / video -->\n' +
     '      <div class="source" ng-if="fileType === \'audio\' || fileType === \'video\'">\n' +
     '        <videogular ng-class="fileType">\n' +
@@ -653,8 +653,12 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '      <!-- html / text -->\n' +
     '      <div ng-if="(fileType === \'html\') || (fileType === \'text\')">\n' +
-    '        <div class="source" ng-show="!showCode"><div include-safe="uri"></div></div>\n' +
-    '        <hljs ng-show="showCode" hljs-include="uri"></hljs>\n' +
+    '        <div ng-if="!showCode">\n' +
+    '          <div class="source" include-safe="uri"></div>\n' +
+    '        </div>\n' +
+    '        <div ng-if="showCode">\n' +
+    '          <hljs hljs-include="uri"></hljs>\n' +
+    '        </div>\n' +
     '      </div>\n' +
     '\n' +
     '      <!-- image -->\n' +
@@ -662,14 +666,22 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '      <!-- json -->\n' +
     '      <div ng-if="fileType === \'json\'">\n' +
-    '        <friendly-json class="source" ng-show="!showCode" uri="uri"></friendly-json>\n' +
-    '        <json-explorer class="source" ng-show="showCode" url="uri"></json-explorer>\n' +
+    '        <div ng-if="!showCode">\n' +
+    '          <friendly-json class="source" uri="uri"></friendly-json>\n' +
+    '        </div>\n' +
+    '        <div ng-if="showCode">\n' +
+    '          <json-explorer class="source" url="uri"></json-explorer>\n' +
+    '        </div>\n' +
     '      </div>\n' +
     '\n' +
     '      <!-- xml -->\n' +
     '      <div ng-if="fileType === \'xml\'">\n' +
-    '        <friendly-xml ng-show="!showCode" class="source" uri="uri"></friendly-xml>\n' +
-    '        <hljs ng-show="showCode" hljs-include="hljsUri"></hljs>\n' +
+    '        <div ng-if="!showCode">\n' +
+    '          <friendly-xml class="source" uri="uri"></friendly-xml>\n' +
+    '        </div>\n' +
+    '        <div ng-if="showCode">\n' +
+    '          <hljs hljs-include="hljsUri"></hljs>\n' +
+    '        </div>\n' +
     '      </div>\n' +
     '\n' +
     '      <!-- other -->\n' +

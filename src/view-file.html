@@ -19,11 +19,11 @@
   </div>
 
   <div class="viewer-wrapper" ng-class="{'col-sm-11': controls, 'col-sm-12': !controls}">
-    <div class="loading">
+    <div class="loading" ng-show="loading">
       Loading... <i class="fa fa-spinner fa-spin"></i>
     </div>
 
-    <div class="viewer" ng-if="!loading">
+    <div class="viewer" ng-hide="loading">
       <!-- audio / video -->
       <div class="source" ng-if="fileType === 'audio' || fileType === 'video'">
         <videogular ng-class="fileType">
@@ -46,8 +46,12 @@
 
       <!-- html / text -->
       <div ng-if="(fileType === 'html') || (fileType === 'text')">
-        <div class="source" ng-show="!showCode"><div include-safe="uri"></div></div>
-        <hljs ng-show="showCode" hljs-include="uri"></hljs>
+        <div ng-if="!showCode">
+          <div class="source" include-safe="uri"></div>
+        </div>
+        <div ng-if="showCode">
+          <hljs hljs-include="uri"></hljs>
+        </div>
       </div>
 
       <!-- image -->
@@ -55,14 +59,22 @@
 
       <!-- json -->
       <div ng-if="fileType === 'json'">
-        <friendly-json class="source" ng-show="!showCode" uri="uri"></friendly-json>
-        <json-explorer class="source" ng-show="showCode" url="uri"></json-explorer>
+        <div ng-if="!showCode">
+          <friendly-json class="source" uri="uri"></friendly-json>
+        </div>
+        <div ng-if="showCode">
+          <json-explorer class="source" url="uri"></json-explorer>
+        </div>
       </div>
 
       <!-- xml -->
       <div ng-if="fileType === 'xml'">
-        <friendly-xml ng-show="!showCode" class="source" uri="uri"></friendly-xml>
-        <hljs ng-show="showCode" hljs-include="hljsUri"></hljs>
+        <div ng-if="!showCode">
+          <friendly-xml class="source" uri="uri"></friendly-xml>
+        </div>
+        <div ng-if="showCode">
+          <hljs hljs-include="hljsUri"></hljs>
+        </div>
       </div>
 
       <!-- other -->
