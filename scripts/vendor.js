@@ -108802,7 +108802,7 @@ angular.module('RecursionHelper', []).factory('RecursionHelper', ['$compile', fu
         var name = meta.getAttribute('name');
         if (name) {
           var value = meta.hasAttribute('content') ? meta.getAttribute('content') : meta.textContent;
-          if (value === '' && meta.nextSibling.nodeType === 3) {
+          if ((!value || value === '') && meta.nextSibling && meta.nextSibling.nodeType === 3) {
             value = meta.nextSibling.textContent;
           }
           metatags[name] = value;
