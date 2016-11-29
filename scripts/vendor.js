@@ -108357,8 +108357,7 @@ angular.module('RecursionHelper', []).factory('RecursionHelper', ['$compile', fu
     'hljs',
     'ngJsonExplorer',
     'ngSanitize',
-    'RecursionHelper',
-    'ui.bootstrap'
+    'RecursionHelper'
   ]);
 
 }());
@@ -108761,12 +108760,27 @@ angular.module('RecursionHelper', []).factory('RecursionHelper', ['$compile', fu
             // if it's json.
             return data;
           }
-        }).then(function (result) {
-          $scope.loading = false;
+        }).then(function () {
           $scope.hljsUri = uri;
+          $scope.loading = false;
         });
       } else {
         $scope.hljsUri = uri;
+      }
+    };
+    ctrl.loadHtml = function(uri) {
+      var html = $templateCache.get(uri);
+      $scope.loading = !html;
+
+      if ($scope.loading) {
+        $http.get(uri, {
+          cache: $templateCache
+        }).then(function (data) {
+          $scope.metatags = ctrl.getMetaTags(data.data);
+          $scope.loading = false;
+        });
+      } else {
+        $scope.metatags = ctrl.getMetaTags(html);
       }
     };
     ctrl.showModal = function() {
@@ -108777,6 +108791,38 @@ angular.module('RecursionHelper', []).factory('RecursionHelper', ['$compile', fu
     ctrl.toggleCode = function() {
       $scope.showCode = !$scope.showCode;
     };
+    ctrl.getMetaTags = function(html) {
+      var el = parseHtml(html);
+      var metatags = {};
+
+      var title = el.querySelector('title');
+      metatags.title = title.textContent;
+
+      angular.forEach(el.querySelectorAll('meta'), function(meta, index) {
+        var name = meta.getAttribute('name');
+        if (name) {
+          var value = meta.hasAttribute('content') ? meta.getAttribute('content') : meta.textContent;
+          if (value === '' && meta.nextSibling.nodeType === 3) {
+            value = meta.nextSibling.textContent;
+          }
+          metatags[name] = value;
+        }
+      });
+
+      return angular.equals({}, metatags) ? null : metatags;
+    };
+
+    function parseHtml(html) {
+      if (document.createRange) {
+        var range = document.createRange();
+        range.selectNode(document.body); // required in Safari
+        return range.createContextualFragment(html);
+      } else {
+        var el = document.createElement( 'html' );
+        el.innerHTML = html;
+        return el;
+      }
+    }
   }
 }());
 
@@ -108880,14 +108926,24 @@ angular.module('RecursionHelper', []).factory('RecursionHelper', ['$compile', fu
               }
               if ($scope.fileType === 'xml') {
                 ctrl.loadHljs(newUri);
+              } else if ($scope.fileType === 'html') {
+                ctrl.loadHtml(newUri);
               } else {
                 $scope.loading = false;
               }
             }
           });
         } else {
-          $scope.loading = false;
-          $scope.fileType = getFileType($scope.contentType);
+          $scope.loading = true;
+          $scope.$watch('data', function(newData) {
+            if (newData) {
+              $scope.fileType = getFileType($scope.contentType);
+              if ($scope.fileType === 'html') {
+                $scope.metatags = ctrl.getMetaTags(newData);
+              }
+              $scope.loading = false;
+            }
+          });
         }
       }
     };
@@ -108931,10 +108987,13 @@ angular.module('RecursionHelper', []).factory('RecursionHelper', ['$compile', fu
       return {
         restrict: 'E',
         link: function(scope, element, attrs) {
+          // prepare object tag attributes
           var data = ' data="' + scope.$eval(attrs.data) + '"';
           var type = attrs.type ? (' type="' + scope.$eval(attrs.type) + '"') : '';
           var height = attrs.height ? (' height="' + scope.$eval(attrs.height) + '"') : '';
           var width = attrs.width ? (' width="' + scope.$eval(attrs.width) + '"') : '';
+
+          // tried transclude before, but that didn't seem to work..
           var innerHtml = element.html();
           element.html('<object " ' + height + width + type + data + '>' + innerHtml + '</object>');
           $compile(element.contents())(scope);
@@ -109061,6 +109120,19 @@ module.run(['$templateCache', function($templateCache) {
     '        <!-- html / text -->\n' +
     '        <div ng-if="(fileType === \'html\') || (fileType === \'text\')">\n' +
     '          <div ng-if="!showCode && uri">\n' +
+    '            <div class="alert alert-info" ng-if="metatags">\n' +
+    '              <div class="pull-right">\n' +
+    '                <a ng-click="showMeta[uri] = !showMeta[uri]">\n' +
+    '                  <i ng-if="showMeta[uri]" class="glyphicon glyphicon-chevron-up"></i>\n' +
+    '                  <i ng-if="!showMeta[uri]" class="glyphicon glyphicon-chevron-down"></i>\n' +
+    '                </a>\n' +
+    '              </div>\n' +
+    '              <dl class="metatags" ng-if="showMeta[uri]">\n' +
+    '                <dt ng-repeat-start="(key, val) in metatags">{{key}}</dt>\n' +
+    '                <dd ng-repeat-end>{{val}}</dd>\n' +
+    '              </dl>\n' +
+    '              <div ng-if="!showMeta[uri]">HTML Details</div>\n' +
+    '            </div>\n' +
     '            <div class="source" include-safe="uri"></div>\n' +
     '          </div>\n' +
     '          <div ng-if="!showCode && !uri">\n' +

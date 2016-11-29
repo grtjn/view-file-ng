@@ -7727,6 +7727,14 @@ videogular vg-ima-ads,
 .view-file .viewer-wrapper .viewer videogular.audio {
   height: 50px;
 }
+.view-file .viewer-wrapper .viewer dl.metatags {
+  columns: 2;
+  margin-bottom: 0;
+}
+.view-file .viewer-wrapper .viewer dl.metatags dd {
+  break-before: avoid;
+  margin-left: 20px;
+}
 .view-file .source {
   display: block;
   padding: 9.5px;
