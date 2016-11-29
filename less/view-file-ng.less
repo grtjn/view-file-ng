@@ -1,5 +1,5 @@
 .view-file {
-  padding-right: 30px;
+  padding: 0;
 
   .viewer-wrapper {
     height: 600px;
@@ -11,8 +11,10 @@
     .viewer {
       position: absolute;
       width: 100%;
-      background-color: white;
-      padding-right: 10px;
+      background-color: inherit;
+      padding: 0;
+      overflow: hidden;
+      max-height: 600px;
 
       hljs pre, .hljs pre {
         overflow: scroll;
@@ -33,7 +35,7 @@
   .source {
     display: block;
     padding: 9.5px;
-    margin: 0 0 10px;
+    margin: 0;
     font-size: 13px;
     line-height: 1.42857143;
     word-break: break-all;
@@ -47,6 +49,8 @@
   }
 
   .dl-horizontal {
+    margin: 0;
+
     dt {
       width: 100px;
       text-align: left;
@@ -57,5 +61,15 @@
     .dl-horizontal {
       margin-bottom: 0;
     }
+  }
+}
+
+.view-file.audio .viewer-wrapper {
+  height: 71px;
+}
+
+.modal-body {
+  .viewer-wrapper {
+    padding: 0;
   }
 }
