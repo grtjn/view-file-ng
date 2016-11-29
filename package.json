@@ -1,7 +1,7 @@
 {
-  "name": "d3-cloud-ng",
+  "name": "view-file-ng",
   "version": "0.0.0",
-  "description": "Angular directive wrapping the d3-cloud library",
+  "description": "Angular directive for previewing files",
   "dependencies": {},
   "devDependencies": {
     "angular-jsdoc": "^1.4.2",
@@ -40,18 +40,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/grtjn/d3-cloud-ng.git"
+    "url": "https://github.com/grtjn/view-file-ng.git"
   },
   "keywords": [
     "angular",
     "angularjs",
-    "d3",
-    "d3-cloud"
+    "view",
+    "file",
+    "highlightjs",
+    "json-explorer",
+    "videogular",
+    "x2js",
+    "marklogic"
   ],
   "author": "grtjn",
   "bugs": {
-    "url": "https://github.com/grtjn/d3-cloud-ng/issues"
+    "url": "https://github.com/grtjn/view-file-ng/issues"
   },
-  "homepage": "https://github.com/grtjn/d3-cloud-ng",
+  "homepage": "https://github.com/grtjn/view-file-ng",
   "private": true
 }

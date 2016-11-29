@@ -61,15 +61,16 @@
   * @description
   *   Angular directive for rendering nested JSON structures in a user-friendly way.
   *
-  * @attr {String}    uri           Optional. Url of JSON file to be rendered. Url must be trusted upfront.
   * @attr {String}    json          Optional. JSON contents to be rendered. Do not use together with uri.
+  * @attr {String}    template      Optional. Url of HTML template to use for this directive.
+  * @attr {String}    uri           Optional. Url of JSON file to be rendered. Url must be trusted upfront.
   *
   * @example
-  * <friendly-json uri="ctrl.viewUri"></friendly-json>
+  * <friendly-json uri="ctrl.viewUri" template="/my/json-template.html"></friendly-json>
   * 
   * or
   * 
-  * <friendly-json json="ctrl.json"></friendly-json>
+  * <friendly-json json="ctrl.json" template="/my/json-template.html"></friendly-json>
   */
 
 (function () {
@@ -105,7 +106,7 @@
         uri: '=?',
         json: '=?'
       },
-      templateUrl: '/view-file-ng/friendly-json.html',
+      templateUrl: template,
       compile: function(element) {
         // Use the compile function from the RecursionHelper,
         // And return the linking function(s) which it returns
@@ -120,6 +121,18 @@
         });
       }
     };
+
+    function template(element, attrs) {
+      var url;
+
+      if (attrs.template) {
+        url = attrs.template;
+      } else {
+        url = '/view-file-ng/friendly-json.html';
+      }
+
+      return url;
+    }
   }
 
 }());
@@ -182,15 +195,16 @@
   * @description
   *   Angular directive for rendering nested JSON structures in a user-friendly way.
   *
+  * @attr {String}    template      Optional. Url of HTML template to use for this directive.
   * @attr {String}    uri           Optional. Url of XML file to be rendered. Url must be trusted upfront.
   * @attr {String}    xml           Optional. XML contents to be rendered. Do not use together with uri.
   *
   * @example
-  * <friendly-xml uri="ctrl.viewUri"></friendly-xml>
+  * <friendly-xml uri="ctrl.viewUri" template="/my/xml-template.html"></friendly-xml>
   * 
   * or
   * 
-  * <friendly-xml xml="ctrl.xml"></friendly-xml>
+  * <friendly-xml xml="ctrl.xml" template="/my/xml-template.html"></friendly-xml>
   */
 
 (function () {
@@ -211,7 +225,7 @@
         uri: '=?',
         xml: '=?'
       },
-      templateUrl: '/view-file-ng/friendly-json.html',
+      templateUrl: template,
       compile: function(element) {
         // Use the compile function from the RecursionHelper,
         // And return the linking function(s) which it returns
@@ -232,6 +246,18 @@
         });
       }
     };
+
+    function template(element, attrs) {
+      var url;
+
+      if (attrs.template) {
+        url = attrs.template;
+      } else {
+        url = '/view-file-ng/friendly-json.html';
+      }
+
+      return url;
+    }
   }
 
 }());
@@ -412,18 +438,28 @@
   * @description
   *   Angular directive for viewing files. Leverages a.o. highlightjs, json-explorer, sanitize, videogular, x2js.
   *
-  * @attr {String}    uri           Required. Url of file to be viewed.
+  * @attr {String}    data          Optional. Data of file to be viewed. Do not use together with uri.
+  * @attr {String}    uri           Optional. Url of file to be viewed.
   * @attr {String}    content-type  Required. Mime-type of file to be viewed.
-  * @attr {String}    download-uri  Optional. Url of file for download purpose. Default: null.
-  * @attr {String}    file-name     Optional. Filename for display. Default: uri portion after last /.
   * @attr {Boolean}   allow-modal   Optional. Allow opening of file in modal overlay. Default: true.
   * @attr {Boolean}   controls      Optional. Show controls on left. Default: true if download-uri or allow-modal.
+  * @attr {String}    download-uri  Optional. Url of file for download purpose. Default: null.
+  * @attr {String}    file-name     Optional. Filename for display. Default: uri portion after last /.
   * @attr {Boolean}   show-code     Optional. Show raw code initially for JSON, HTML, Text, and XML. Default: false.
+  * @attr {String}    template      Optional. Url of HTML template to use for this directive.
   * @attr {Boolean}   trust-uri     Optional. Apply trustAsResourceUrl on uri (not recommended). Default: false.
   *
   * @example
-  * <view-file uri="ctrl.viewUri" download-uri="ctrl.downloadUri" content-type="ctrl.contentType"
-  *   file-name="ctrl.fileName" allow-modal="true" controls="true" show-code="false" trust-uri="false">
+  * <view-file uri="ctrl.viewUri" content-type="ctrl.contentType"
+  *   allow-modal="true" controls="true" download-uri="ctrl.downloadUri" file-name="ctrl.fileName"
+  *   show-code="false" template="/my/view-template.html" trust-uri="false">
+  * </view-file>
+  *
+  * or
+  *
+  * <view-file data="ctrl.viewData" content-type="ctrl.contentType"
+  *   allow-modal="true" controls="true" download-uri="ctrl.downloadUri" file-name="ctrl.fileName"
+  *   show-code="false" template="/my/view-template.html" trust-uri="false">
   * </view-file>
   */
 
@@ -465,41 +501,59 @@
       controller: 'ViewFileCtrl',
       controllerAs: 'ctrl',
       scope: {
-        uri: '=',
-        downloadUri: '=?',
+        data: '=?',
+        uri: '=?',
         contentType: '=',
-        fileName: '=?',
         _allowModal: '@allowModal',
         _controls: '@controls',
+        downloadUri: '=?',
+        fileName: '=?',
         _showCode: '@showCode',
         _trustUri: '@trustUri'
       },
-      templateUrl: '/view-file-ng/view-file.html',
+      templateUrl: template,
       link: function ($scope, $elem, $attrs, ctrl) {
 
         $scope.allowModal = isTrue($scope._allowModal, true);
         $scope.controls = isTrue($scope._controls, $scope.allowModal || !!$scope.downloadUri);
         $scope.showCode = isTrue($scope._showCode, false);
         $scope.trustUri = isTrue($scope._trustUri, false);
-        $scope.loading = true;
 
-        $scope.$watch('uri', function(newUri) {
-          if (newUri) {
-            $scope.fileName = $scope.fileName || newUri.split('/').pop();
-            $scope.fileType = getFileType($scope.contentType);
+        if ($attrs.uri) {
+          $scope.loading = true;
+          $scope.$watch('uri', function(newUri) {
+            if (newUri) {
+              $scope.fileName = $scope.fileName || newUri.split('/').pop();
+              $scope.fileType = getFileType($scope.contentType);
 
-            if ($scope.trustUri) {
-              ctrl.trustUri(newUri);
+              if ($scope.trustUri) {
+                ctrl.trustUri(newUri);
+              }
+              if ($scope.fileType === 'xml') {
+                ctrl.loadHljs(newUri);
+              } else {
+                $scope.loading = false;
+              }
             }
-            if ($scope.fileType === 'xml') {
-              ctrl.loadHljs(newUri);
-            } else {
-              $scope.loading = false;
-            }
-          }
-        });
+          });
+        } else {
+          $scope.loading = false;
+          $scope.fileType = getFileType($scope.contentType);
+        }
       }
     };
+
+    function template(element, attrs) {
+      var url;
+
+      if (attrs.template) {
+        url = attrs.template;
+      } else {
+        url = '/view-file-ng/view-file.html';
+      }
+
+      return url;
+    }
   }
 
 }());
@@ -524,19 +578,23 @@
   'use strict';
 
   angular.module('view.file')
-    .directive('viewObject', function() {
+    .directive('viewObject', ['$compile', function($compile) {
       return {
         restrict: 'E',
-        transclude: true,
         link: function(scope, element, attrs) {
+          // prepare object tag attributes
           var data = ' data="' + scope.$eval(attrs.data) + '"';
           var type = attrs.type ? (' type="' + scope.$eval(attrs.type) + '"') : '';
           var height = attrs.height ? (' height="' + scope.$eval(attrs.height) + '"') : '';
           var width = attrs.width ? (' width="' + scope.$eval(attrs.width) + '"') : '';
-          element.append('<object " ' + height + width + type + data + ' ng-transclude></object>');
+
+          // tried transclude before, but that didn't seem to work..
+          var innerHtml = element.html();
+          element.html('<object " ' + height + width + type + data + '>' + innerHtml + '</object>');
+          $compile(element.contents())(scope);
         }
       };
-    });
+    }]);
 
 }());
 (function(module) {
@@ -605,93 +663,123 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/view-file-ng/view-file.html',
-    '<div class="view-file row">\n' +
+    '<div class="view-file container-fluid" ng-class="fileType">\n' +
+    '  <div class="row">\n' +
+    '    <div class="controls col-sm-1 text-right" ng-if="controls && (((fileType === \'xml\') || (fileType === \'json\') || (fileType === \'html\') || (fileType === \'text\')) || allowModal || downloadUri)">\n' +
+    '      <div class="code-control">\n' +
+    '        <a ng-if="(fileType === \'xml\') || (fileType === \'json\') || (fileType === \'html\') || (fileType === \'text\')" class="btn btn-default" ng-click="ctrl.toggleCode()">\n' +
+    '          <span ng-show="!showCode && ((fileType === \'json\') || (fileType === \'text\'))">{ }</span>\n' +
+    '          <i ng-show="!showCode && ((fileType === \'html\') || (fileType === \'xml\'))" class="fa fa-code"></i>\n' +
+    '          <i ng-show="showCode" class="fa fa-align-left"></i>\n' +
+    '        </a>\n' +
+    '      </div>\n' +
     '\n' +
-    '  <div class="controls col-sm-1 text-right" ng-if="controls && (((fileType === \'xml\') || (fileType === \'json\') || (fileType === \'html\') || (fileType === \'text\')) || allowModal || downloadUri)">\n' +
-    '    <div class="code-control">\n' +
-    '      <a ng-if="(fileType === \'xml\') || (fileType === \'json\') || (fileType === \'html\') || (fileType === \'text\')" class="btn btn-default" ng-click="ctrl.toggleCode()">\n' +
-    '        <span ng-show="!showCode && ((fileType === \'json\') || (fileType === \'text\'))">{ }</span>\n' +
-    '        <i ng-show="!showCode && ((fileType === \'html\') || (fileType === \'xml\'))" class="fa fa-code"></i>\n' +
-    '        <i ng-show="showCode" class="fa fa-align-left"></i>\n' +
-    '      </a>\n' +
+    '      <div class="modal-control">\n' +
+    '        <a ng-if="allowModal && fileType !== \'audio\'" class="btn btn-default" ng-click="ctrl.showModal()"><i class="glyphicon glyphicon-resize-full"></i></a>\n' +
+    '      </div>\n' +
+    '\n' +
+    '      <div class="download-control">\n' +
+    '        <a ng-if="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}" target="_blank" download><i class="glyphicon glyphicon-download-alt"></i></a>\n' +
+    '      </div>\n' +
     '    </div>\n' +
     '\n' +
-    '    <div class="modal-control">\n' +
-    '      <a ng-if="allowModal && fileType !== \'audio\'" class="btn btn-default" ng-click="ctrl.showModal()"><i class="glyphicon glyphicon-resize-full"></i></a>\n' +
+    '    <div class="viewer-wrapper" ng-class="{\'col-sm-11\': controls, \'col-sm-12\': !controls}">\n' +
+    '      <div class="loading" ng-show="loading">\n' +
+    '        Loading... <i class="fa fa-spinner fa-spin"></i>\n' +
+    '      </div>\n' +
+    '\n' +
+    '      <div class="viewer" ng-hide="loading">\n' +
+    '        <!-- audio / video -->\n' +
+    '        <div class="source" ng-if="(fileType === \'audio\' || fileType === \'video\') && uri">\n' +
+    '          <videogular ng-class="fileType" ng-if="uri">\n' +
+    '            <vg-media vg-src="uri"></vg-media>\n' +
+    '            <vg-controls>\n' +
+    '              <vg-play-pause-button></vg-play-pause-button>\n' +
+    '              <vg-time-display>{{ currentTime | date:\'mm:ss\' }}</vg-time-display>\n' +
+    '              <vg-scrub-bar>\n' +
+    '                <vg-scrub-bar-current-time></vg-scrub-bar-current-time>\n' +
+    '              </vg-scrub-bar>\n' +
+    '              <vg-time-display>{{ timeLeft | date:\'mm:ss\' }}</vg-time-display>\n' +
+    '              <vg-volume>\n' +
+    '                <vg-mute-button></vg-mute-button>\n' +
+    '                <vg-volume-bar></vg-volume-bar>\n' +
+    '              </vg-volume>\n' +
+    '              <vg-fullscreen-button ng-show="fileType === \'video\'"></vg-fullscreen-button>\n' +
+    '            </vg-controls>\n' +
+    '          </videogular>\n' +
+    '        </div>\n' +
+    '        <div ng-if="(fileType === \'audio\' || fileType === \'video\') && !uri" class="alert alert-warning">\n' +
+    '          Data view not supported for audio and video\n' +
+    '        </div>\n' +
+    '\n' +
+    '        <!-- html / text -->\n' +
+    '        <div ng-if="(fileType === \'html\') || (fileType === \'text\')">\n' +
+    '          <div ng-if="!showCode && uri">\n' +
+    '            <div class="source" include-safe="uri"></div>\n' +
+    '          </div>\n' +
+    '          <div ng-if="!showCode && !uri">\n' +
+    '            <div class="source" ng-bind-html="data"></div>\n' +
+    '          </div>\n' +
+    '          <div ng-if="showCode && uri">\n' +
+    '            <hljs hljs-include="uri"></hljs>\n' +
+    '          </div>\n' +
+    '          <div ng-if="showCode && !uri">\n' +
+    '            <hljs hljs-source="data"></hljs>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '\n' +
+    '        <!-- image -->\n' +
+    '        <div class="source text-center" ng-if="fileType === \'image\' && uri">\n' +
+    '          <img ng-src="{{uri}}">\n' +
+    '        </div>\n' +
+    '        <div class="alert alert-warning" ng-if="fileType === \'image\' && !uri">\n' +
+    '          Data view not supported for images\n' +
+    '        </div>\n' +
+    '\n' +
+    '        <!-- json -->\n' +
+    '        <div ng-if="fileType === \'json\'">\n' +
+    '          <div ng-if="!showCode && uri">\n' +
+    '            <friendly-json class="source" uri="uri"></friendly-json>\n' +
+    '          </div>\n' +
+    '          <div ng-if="!showCode && !uri">\n' +
+    '            <friendly-json class="source" json="data"></friendly-json>\n' +
+    '          </div>\n' +
+    '          <div ng-if="showCode && uri">\n' +
+    '            <json-explorer class="source" url="uri"></json-explorer>\n' +
+    '          </div>\n' +
+    '          <div ng-if="showCode && !uri">\n' +
+    '            <json-explorer class="source" json-data="data"></json-explorer>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '\n' +
+    '        <!-- xml -->\n' +
+    '        <div ng-if="fileType === \'xml\'">\n' +
+    '          <div ng-if="!showCode && uri">\n' +
+    '            <friendly-xml class="source" uri="uri"></friendly-xml>\n' +
+    '          </div>\n' +
+    '          <div ng-if="!showCode && !uri">\n' +
+    '            <friendly-xml class="source" xml="data"></friendly-xml>\n' +
+    '          </div>\n' +
+    '          <div ng-if="showCode && uri">\n' +
+    '            <hljs hljs-include="hljsUri"></hljs>\n' +
+    '          </div>\n' +
+    '          <div ng-if="showCode && !uri">\n' +
+    '            <hljs hljs-source="data"></hljs>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '\n' +
+    '        <!-- other -->\n' +
+    '        <view-object class="source" ng-if="fileType === \'other\' && uri" data="uri" type="contentType">\n' +
+    '          <a ng-show="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}">Download</a>\n' +
+    '          <div ng-show="!downloadUri" class="alert alert-warning">Alert: cannnot display this file!</div>\n' +
+    '        </view-object>\n' +
+    '        <div class="alert alert-warning" ng-if="fileType === \'other\' && !uri">\n' +
+    '          Data view not supported for binaries\n' +
+    '        </div>\n' +
+    '      </div>\n' +
     '    </div>\n' +
     '\n' +
-    '    <div class="download-control">\n' +
-    '      <a ng-if="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}" download><i class="glyphicon glyphicon-download-alt"></i></a>\n' +
-    '    </div>\n' +
     '  </div>\n' +
-    '\n' +
-    '  <div class="viewer-wrapper" ng-class="{\'col-sm-11\': controls, \'col-sm-12\': !controls}">\n' +
-    '    <div class="loading" ng-show="loading">\n' +
-    '      Loading... <i class="fa fa-spinner fa-spin"></i>\n' +
-    '    </div>\n' +
-    '\n' +
-    '    <div class="viewer" ng-hide="loading">\n' +
-    '      <!-- audio / video -->\n' +
-    '      <div class="source" ng-if="fileType === \'audio\' || fileType === \'video\'">\n' +
-    '        <videogular ng-class="fileType">\n' +
-    '          <vg-media vg-src="uri"></vg-media>\n' +
-    '          <vg-controls>\n' +
-    '            <vg-play-pause-button></vg-play-pause-button>\n' +
-    '            <vg-time-display>{{ currentTime | date:\'mm:ss\' }}</vg-time-display>\n' +
-    '            <vg-scrub-bar>\n' +
-    '              <vg-scrub-bar-current-time></vg-scrub-bar-current-time>\n' +
-    '            </vg-scrub-bar>\n' +
-    '            <vg-time-display>{{ timeLeft | date:\'mm:ss\' }}</vg-time-display>\n' +
-    '            <vg-volume>\n' +
-    '              <vg-mute-button></vg-mute-button>\n' +
-    '              <vg-volume-bar></vg-volume-bar>\n' +
-    '            </vg-volume>\n' +
-    '            <vg-fullscreen-button ng-show="fileType === \'video\'"></vg-fullscreen-button>\n' +
-    '          </vg-controls>\n' +
-    '        </videogular>\n' +
-    '      </div>\n' +
-    '\n' +
-    '      <!-- html / text -->\n' +
-    '      <div ng-if="(fileType === \'html\') || (fileType === \'text\')">\n' +
-    '        <div ng-if="!showCode">\n' +
-    '          <div class="source" include-safe="uri"></div>\n' +
-    '        </div>\n' +
-    '        <div ng-if="showCode">\n' +
-    '          <hljs hljs-include="uri"></hljs>\n' +
-    '        </div>\n' +
-    '      </div>\n' +
-    '\n' +
-    '      <!-- image -->\n' +
-    '      <div class="source text-center" ng-if="fileType === \'image\'"><img ng-src="{{uri}}"></div>\n' +
-    '\n' +
-    '      <!-- json -->\n' +
-    '      <div ng-if="fileType === \'json\'">\n' +
-    '        <div ng-if="!showCode">\n' +
-    '          <friendly-json class="source" uri="uri"></friendly-json>\n' +
-    '        </div>\n' +
-    '        <div ng-if="showCode">\n' +
-    '          <json-explorer class="source" url="uri"></json-explorer>\n' +
-    '        </div>\n' +
-    '      </div>\n' +
-    '\n' +
-    '      <!-- xml -->\n' +
-    '      <div ng-if="fileType === \'xml\'">\n' +
-    '        <div ng-if="!showCode">\n' +
-    '          <friendly-xml class="source" uri="uri"></friendly-xml>\n' +
-    '        </div>\n' +
-    '        <div ng-if="showCode">\n' +
-    '          <hljs hljs-include="hljsUri"></hljs>\n' +
-    '        </div>\n' +
-    '      </div>\n' +
-    '\n' +
-    '      <!-- other -->\n' +
-    '      <view-object class="source" ng-if="fileType === \'other\'" data="uri" type="contentType">\n' +
-    '        <a ng-show="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}">Download</a>\n' +
-    '        <div class="alert alert-danger" ng-show="!downloadUri">Alert: Cannot display this file!</div>\n' +
-    '      </view-object>\n' +
-    '    </div>\n' +
-    '  </div>\n' +
-    '\n' +
     '</div>');
 }]);
 })();
