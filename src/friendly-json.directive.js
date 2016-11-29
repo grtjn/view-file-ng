@@ -5,15 +5,16 @@
   * @description
   *   Angular directive for rendering nested JSON structures in a user-friendly way.
   *
-  * @attr {String}    uri           Optional. Url of JSON file to be rendered. Url must be trusted upfront.
   * @attr {String}    json          Optional. JSON contents to be rendered. Do not use together with uri.
+  * @attr {String}    template      Optional. Url of HTML template to use for this directive.
+  * @attr {String}    uri           Optional. Url of JSON file to be rendered. Url must be trusted upfront.
   *
   * @example
-  * <friendly-json uri="ctrl.viewUri"></friendly-json>
+  * <friendly-json uri="ctrl.viewUri" template="/my/json-template.html"></friendly-json>
   * 
   * or
   * 
-  * <friendly-json json="ctrl.json"></friendly-json>
+  * <friendly-json json="ctrl.json" template="/my/json-template.html"></friendly-json>
   */
 
 (function () {
@@ -49,7 +50,7 @@
         uri: '=?',
         json: '=?'
       },
-      templateUrl: '/view-file-ng/friendly-json.html',
+      templateUrl: template,
       compile: function(element) {
         // Use the compile function from the RecursionHelper,
         // And return the linking function(s) which it returns
@@ -64,6 +65,18 @@
         });
       }
     };
+
+    function template(element, attrs) {
+      var url;
+
+      if (attrs.template) {
+        url = attrs.template;
+      } else {
+        url = '/view-file-ng/friendly-json.html';
+      }
+
+      return url;
+    }
   }
 
 }());
