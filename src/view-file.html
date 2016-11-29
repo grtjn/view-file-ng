@@ -1,88 +1,118 @@
-<div class="view-file row">
+<div class="view-file container-fluid" ng-class="fileType">
+  <div class="row">
+    <div class="controls col-sm-1 text-right" ng-if="controls && (((fileType === 'xml') || (fileType === 'json') || (fileType === 'html') || (fileType === 'text')) || allowModal || downloadUri)">
+      <div class="code-control">
+        <a ng-if="(fileType === 'xml') || (fileType === 'json') || (fileType === 'html') || (fileType === 'text')" class="btn btn-default" ng-click="ctrl.toggleCode()">
+          <span ng-show="!showCode && ((fileType === 'json') || (fileType === 'text'))">{ }</span>
+          <i ng-show="!showCode && ((fileType === 'html') || (fileType === 'xml'))" class="fa fa-code"></i>
+          <i ng-show="showCode" class="fa fa-align-left"></i>
+        </a>
+      </div>
 
-  <div class="controls col-sm-1 text-right" ng-if="controls && (((fileType === 'xml') || (fileType === 'json') || (fileType === 'html') || (fileType === 'text')) || allowModal || downloadUri)">
-    <div class="code-control">
-      <a ng-if="(fileType === 'xml') || (fileType === 'json') || (fileType === 'html') || (fileType === 'text')" class="btn btn-default" ng-click="ctrl.toggleCode()">
-        <span ng-show="!showCode && ((fileType === 'json') || (fileType === 'text'))">{ }</span>
-        <i ng-show="!showCode && ((fileType === 'html') || (fileType === 'xml'))" class="fa fa-code"></i>
-        <i ng-show="showCode" class="fa fa-align-left"></i>
-      </a>
+      <div class="modal-control">
+        <a ng-if="allowModal && fileType !== 'audio'" class="btn btn-default" ng-click="ctrl.showModal()"><i class="glyphicon glyphicon-resize-full"></i></a>
+      </div>
+
+      <div class="download-control">
+        <a ng-if="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}" target="_blank" download><i class="glyphicon glyphicon-download-alt"></i></a>
+      </div>
     </div>
 
-    <div class="modal-control">
-      <a ng-if="allowModal && fileType !== 'audio'" class="btn btn-default" ng-click="ctrl.showModal()"><i class="glyphicon glyphicon-resize-full"></i></a>
+    <div class="viewer-wrapper" ng-class="{'col-sm-11': controls, 'col-sm-12': !controls}">
+      <div class="loading" ng-show="loading">
+        Loading... <i class="fa fa-spinner fa-spin"></i>
+      </div>
+
+      <div class="viewer" ng-hide="loading">
+        <!-- audio / video -->
+        <div class="source" ng-if="(fileType === 'audio' || fileType === 'video') && uri">
+          <videogular ng-class="fileType" ng-if="uri">
+            <vg-media vg-src="uri"></vg-media>
+            <vg-controls>
+              <vg-play-pause-button></vg-play-pause-button>
+              <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
+              <vg-scrub-bar>
+                <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+              </vg-scrub-bar>
+              <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+              <vg-volume>
+                <vg-mute-button></vg-mute-button>
+                <vg-volume-bar></vg-volume-bar>
+              </vg-volume>
+              <vg-fullscreen-button ng-show="fileType === 'video'"></vg-fullscreen-button>
+            </vg-controls>
+          </videogular>
+        </div>
+        <div ng-if="(fileType === 'audio' || fileType === 'video') && !uri" class="alert alert-warning">
+          Data view not supported for audio and video
+        </div>
+
+        <!-- html / text -->
+        <div ng-if="(fileType === 'html') || (fileType === 'text')">
+          <div ng-if="!showCode && uri">
+            <div class="source" include-safe="uri"></div>
+          </div>
+          <div ng-if="!showCode && !uri">
+            <div class="source" ng-bind-html="data"></div>
+          </div>
+          <div ng-if="showCode && uri">
+            <hljs hljs-include="uri"></hljs>
+          </div>
+          <div ng-if="showCode && !uri">
+            <hljs hljs-source="data"></hljs>
+          </div>
+        </div>
+
+        <!-- image -->
+        <div class="source text-center" ng-if="fileType === 'image' && uri">
+          <img ng-src="{{uri}}">
+        </div>
+        <div class="alert alert-warning" ng-if="fileType === 'image' && !uri">
+          Data view not supported for images
+        </div>
+
+        <!-- json -->
+        <div ng-if="fileType === 'json'">
+          <div ng-if="!showCode && uri">
+            <friendly-json class="source" uri="uri"></friendly-json>
+          </div>
+          <div ng-if="!showCode && !uri">
+            <friendly-json class="source" json="data"></friendly-json>
+          </div>
+          <div ng-if="showCode && uri">
+            <json-explorer class="source" url="uri"></json-explorer>
+          </div>
+          <div ng-if="showCode && !uri">
+            <json-explorer class="source" json-data="data"></json-explorer>
+          </div>
+        </div>
+
+        <!-- xml -->
+        <div ng-if="fileType === 'xml'">
+          <div ng-if="!showCode && uri">
+            <friendly-xml class="source" uri="uri"></friendly-xml>
+          </div>
+          <div ng-if="!showCode && !uri">
+            <friendly-xml class="source" xml="data"></friendly-xml>
+          </div>
+          <div ng-if="showCode && uri">
+            <hljs hljs-include="hljsUri"></hljs>
+          </div>
+          <div ng-if="showCode && !uri">
+            <hljs hljs-source="data"></hljs>
+          </div>
+        </div>
+
+        <!-- other -->
+        <view-object class="source" ng-if="fileType === 'other' && uri" data="uri" type="contentType">
+          <a ng-show="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}">Download</a>
+          <div ng-show="!downloadUri" class="alert alert-warning">Alert: cannnot display this file!</div>
+        </view-object>
+        <div class="alert alert-warning" ng-if="fileType === 'other' && !uri">
+          Data view not supported for binaries
+        </div>
+      </div>
     </div>
 
-    <div class="download-control">
-      <a ng-if="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
-    </div>
   </div>
-
-  <div class="viewer-wrapper" ng-class="{'col-sm-11': controls, 'col-sm-12': !controls}">
-    <div class="loading" ng-show="loading">
-      Loading... <i class="fa fa-spinner fa-spin"></i>
-    </div>
-
-    <div class="viewer" ng-hide="loading">
-      <!-- audio / video -->
-      <div class="source" ng-if="fileType === 'audio' || fileType === 'video'">
-        <videogular ng-class="fileType">
-          <vg-media vg-src="uri"></vg-media>
-          <vg-controls>
-            <vg-play-pause-button></vg-play-pause-button>
-            <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
-            <vg-scrub-bar>
-              <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-            </vg-scrub-bar>
-            <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
-            <vg-volume>
-              <vg-mute-button></vg-mute-button>
-              <vg-volume-bar></vg-volume-bar>
-            </vg-volume>
-            <vg-fullscreen-button ng-show="fileType === 'video'"></vg-fullscreen-button>
-          </vg-controls>
-        </videogular>
-      </div>
-
-      <!-- html / text -->
-      <div ng-if="(fileType === 'html') || (fileType === 'text')">
-        <div ng-if="!showCode">
-          <div class="source" include-safe="uri"></div>
-        </div>
-        <div ng-if="showCode">
-          <hljs hljs-include="uri"></hljs>
-        </div>
-      </div>
-
-      <!-- image -->
-      <div class="source text-center" ng-if="fileType === 'image'"><img ng-src="{{uri}}"></div>
-
-      <!-- json -->
-      <div ng-if="fileType === 'json'">
-        <div ng-if="!showCode">
-          <friendly-json class="source" uri="uri"></friendly-json>
-        </div>
-        <div ng-if="showCode">
-          <json-explorer class="source" url="uri"></json-explorer>
-        </div>
-      </div>
-
-      <!-- xml -->
-      <div ng-if="fileType === 'xml'">
-        <div ng-if="!showCode">
-          <friendly-xml class="source" uri="uri"></friendly-xml>
-        </div>
-        <div ng-if="showCode">
-          <hljs hljs-include="hljsUri"></hljs>
-        </div>
-      </div>
-
-      <!-- other -->
-      <view-object class="source" ng-if="fileType === 'other'" data="uri" type="contentType">
-        <a ng-show="downloadUri" class="btn btn-default" ng-href="{{downloadUri}}">Download</a>
-        <div class="alert alert-danger" ng-show="!downloadUri">Alert: Cannot display this file!</div>
-      </view-object>
-    </div>
-  </div>
-
 </div>
