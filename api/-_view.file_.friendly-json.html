@@ -64,7 +64,7 @@
       <h1 class="title">
         friendly-json
         <a class="name-link signature-attributes" href="source/'view.file'.friendly-json.html#line1">source</a>
-        <a class="name-link signature-attributes" href="templates/_view-file-ng_friendly-json.html">template</a>
+        <a class="name-link signature-attributes" href="templates/template">template</a>
       </h1>
       <div id="main" class="big-container">
         <!-- source code html -->
@@ -88,16 +88,6 @@
       </thead>
       <tbody>
         <tr>
-          <td class="name" nowrap="">uri</td>
-          <td class="type"><span class="param-type">
-            String
-          </span></td>
-          <td class="description last">
-            <span>
-              <p>Optional. Url of JSON file to be rendered. Url must be trusted upfront.</p>
-            </span>
-          </td>
-        </tr><tr>
           <td class="name" nowrap="">json</td>
           <td class="type"><span class="param-type">
             String
@@ -107,15 +97,35 @@
               <p>Optional. JSON contents to be rendered. Do not use together with uri.</p>
             </span>
           </td>
+        </tr><tr>
+          <td class="name" nowrap="">template</td>
+          <td class="type"><span class="param-type">
+            String
+          </span></td>
+          <td class="description last">
+            <span>
+              <p>Optional. Url of HTML template to use for this directive.</p>
+            </span>
+          </td>
+        </tr><tr>
+          <td class="name" nowrap="">uri</td>
+          <td class="type"><span class="param-type">
+            String
+          </span></td>
+          <td class="description last">
+            <span>
+              <p>Optional. Url of JSON file to be rendered. Url must be trusted upfront.</p>
+            </span>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
   <div>
     <h4>Example</h4>
-    <pre class="prettyprint"><code><span class="str">&lt;friendly-json uri="ctrl.viewUri">&lt;/friendly-json>
+    <pre class="prettyprint"><code><span class="str">&lt;friendly-json uri="ctrl.viewUri" template="/my/json-template.html">&lt;/friendly-json>
 or
-&lt;friendly-json json="ctrl.json">&lt;/friendly-json></span></code></pre>
+&lt;friendly-json json="ctrl.json" template="/my/json-template.html">&lt;/friendly-json></span></code></pre>
   </div>
 </div></div>
         </div>

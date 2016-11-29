@@ -64,7 +64,7 @@
       <h1 class="title">
         friendly-xml
         <a class="name-link signature-attributes" href="source/'view.file'.friendly-xml.html#line1">source</a>
-        <a class="name-link signature-attributes" href="templates/_view-file-ng_friendly-json.html">template</a>
+        <a class="name-link signature-attributes" href="templates/template">template</a>
       </h1>
       <div id="main" class="big-container">
         <!-- source code html -->
@@ -88,6 +88,16 @@
       </thead>
       <tbody>
         <tr>
+          <td class="name" nowrap="">template</td>
+          <td class="type"><span class="param-type">
+            String
+          </span></td>
+          <td class="description last">
+            <span>
+              <p>Optional. Url of HTML template to use for this directive.</p>
+            </span>
+          </td>
+        </tr><tr>
           <td class="name" nowrap="">uri</td>
           <td class="type"><span class="param-type">
             String
@@ -113,9 +123,9 @@
   </div>
   <div>
     <h4>Example</h4>
-    <pre class="prettyprint"><code><span class="str">&lt;friendly-xml uri="ctrl.viewUri">&lt;/friendly-xml>
+    <pre class="prettyprint"><code><span class="str">&lt;friendly-xml uri="ctrl.viewUri" template="/my/xml-template.html">&lt;/friendly-xml>
 or
-&lt;friendly-xml xml="ctrl.xml">&lt;/friendly-xml></span></code></pre>
+&lt;friendly-xml xml="ctrl.xml" template="/my/xml-template.html">&lt;/friendly-xml></span></code></pre>
   </div>
 </div></div>
         </div>
