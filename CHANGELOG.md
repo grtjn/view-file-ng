@@ -1,5 +1,20 @@
 # Change Log
 
+## [0.1.1](https://github.com/grtjn/view-file-ng/tree/0.1.1) (2016-11-29)
+[Full Changelog](https://github.com/grtjn/view-file-ng/compare/0.1.0...0.1.1)
+
+**Implemented enhancements:**
+
+- Improve \(delayed\) loading of content [\#8](https://github.com/grtjn/view-file-ng/issues/8)
+- Allow showing data loaded upfront [\#6](https://github.com/grtjn/view-file-ng/issues/6)
+- Allow template overrides for all directives [\#4](https://github.com/grtjn/view-file-ng/issues/4)
+
+**Fixed bugs:**
+
+- Transclude in view-object not working [\#11](https://github.com/grtjn/view-file-ng/issues/11)
+- Unused whitespace below audio player [\#10](https://github.com/grtjn/view-file-ng/issues/10)
+- Using view-file in slush-marklogic-node dashboard theme looks bad [\#9](https://github.com/grtjn/view-file-ng/issues/9)
+
 ## [0.1.0](https://github.com/grtjn/view-file-ng/tree/0.1.0) (2016-09-06)
 **Fixed bugs:**
 
