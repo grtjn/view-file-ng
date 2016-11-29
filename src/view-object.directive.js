@@ -18,18 +18,22 @@
   'use strict';
 
   angular.module('view.file')
-    .directive('viewObject', function() {
+    .directive('viewObject', ['$compile', function($compile) {
       return {
         restrict: 'E',
-        transclude: true,
         link: function(scope, element, attrs) {
+          // prepare object tag attributes
           var data = ' data="' + scope.$eval(attrs.data) + '"';
           var type = attrs.type ? (' type="' + scope.$eval(attrs.type) + '"') : '';
           var height = attrs.height ? (' height="' + scope.$eval(attrs.height) + '"') : '';
           var width = attrs.width ? (' width="' + scope.$eval(attrs.width) + '"') : '';
-          element.append('<object " ' + height + width + type + data + ' ng-transclude></object>');
+
+          // tried transclude before, but that didn't seem to work..
+          var innerHtml = element.html();
+          element.html('<object " ' + height + width + type + data + '>' + innerHtml + '</object>');
+          $compile(element.contents())(scope);
         }
       };
-    });
+    }]);
 
 }());
