@@ -13,7 +13,7 @@
     "font-awesome": "^4.6.3",
     "angular-highlightjs": "^0.6.1",
     "ng-json-explorer": "8c2a0f9104",
-    "vkbeautify-wrapper": "vkBeautify#*",
+    "vkbeautify": "*",
     "angular-sanitize": ">=1.4.0",
     "videogular": "^1.4.4",
     "videogular-controls": "^1.4.4",
@@ -27,7 +27,7 @@
         "styles/github.css"
       ]
     },
-    "vkbeautify-wrapper": {
+    "vkbeautify": {
       "main": [
         "vkbeautify.js"
       ]
