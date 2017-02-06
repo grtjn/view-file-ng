@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.1.2](https://github.com/grtjn/view-file-ng/tree/0.1.2) (2017-02-06)
+[Full Changelog](https://github.com/grtjn/view-file-ng/compare/0.1.1...0.1.2)
+
+**Fixed bugs:**
+
+- vkbeautify-wrapper no longer exists [\#12](https://github.com/grtjn/view-file-ng/issues/12)
+
 ## [0.1.1](https://github.com/grtjn/view-file-ng/tree/0.1.1) (2016-11-29)
 [Full Changelog](https://github.com/grtjn/view-file-ng/compare/0.1.0...0.1.1)
 
