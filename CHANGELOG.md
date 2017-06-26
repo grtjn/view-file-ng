@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.1.3](https://github.com/grtjn/view-file-ng/tree/0.1.3) (2017-06-26)
+[Full Changelog](https://github.com/grtjn/view-file-ng/compare/0.1.2...0.1.3)
+
+**Fixed bugs:**
+
+- ng-json-explorer broken [\#16](https://github.com/grtjn/view-file-ng/issues/16)
+
 ## [0.1.2](https://github.com/grtjn/view-file-ng/tree/0.1.2) (2017-02-06)
 [Full Changelog](https://github.com/grtjn/view-file-ng/compare/0.1.1...0.1.2)
 
