@@ -12,7 +12,7 @@
     "bootstrap": "~3.3.5",
     "font-awesome": "^4.6.3",
     "angular-highlightjs": "^0.6.1",
-    "ng-json-explorer": "8c2a0f9104",
+    "ng-json-explorer": "f7236fa857",
     "vkbeautify": "*",
     "angular-sanitize": ">=1.4.0",
     "videogular": "^1.4.4",
