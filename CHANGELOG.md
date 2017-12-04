@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.1.4](https://github.com/grtjn/view-file-ng/tree/0.1.4) (2017-12-04)
+[Full Changelog](https://github.com/grtjn/view-file-ng/compare/0.1.3...0.1.4)
+
+**Fixed bugs:**
+
+- ng-json-explorer not working with angular 1.6+ [\#20](https://github.com/grtjn/view-file-ng/issues/20)
+
 ## [0.1.3](https://github.com/grtjn/view-file-ng/tree/0.1.3) (2017-06-26)
 [Full Changelog](https://github.com/grtjn/view-file-ng/compare/0.1.2...0.1.3)
 
