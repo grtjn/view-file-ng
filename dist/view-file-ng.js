@@ -624,7 +624,8 @@ module.run(['$templateCache', function($templateCache) {
     '      <!-- array of object, repeat recurse -->\n' +
     '      <dd ng-if="(val | isArray) && (val[0] | isObject)" ng-repeat="v in val track by $index">\n' +
     '        <!--span ng-repeat="json in val track by $index" ng-include="\'/view-file-ng/friendly-json.html\'"></span-->\n' +
-    '        <friendly-json json="v"></friendly-json>\n' +
+    '        <span ng-if="!(v | isObject)">{{ v !== \'\' ? v : \'&#160;\' }}</span>\n' +
+    '        <friendly-json ng-if="(v | isObject)" json="v"></friendly-json>\n' +
     '      </dd>\n' +
     '    </span>\n' +
     '  </span>\n' +

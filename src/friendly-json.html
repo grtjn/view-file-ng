@@ -17,7 +17,8 @@
       <!-- array of object, repeat recurse -->
       <dd ng-if="(val | isArray) && (val[0] | isObject)" ng-repeat="v in val track by $index">
         <!--span ng-repeat="json in val track by $index" ng-include="'/view-file-ng/friendly-json.html'"></span-->
-        <friendly-json json="v"></friendly-json>
+        <span ng-if="!(v | isObject)">{{ v !== '' ? v : '&#160;' }}</span>
+        <friendly-json ng-if="(v | isObject)" json="v"></friendly-json>
       </dd>
     </span>
   </span>
