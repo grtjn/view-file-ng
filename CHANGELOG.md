@@ -1,5 +1,16 @@
 # Change Log
 
+## [0.1.5](https://github.com/grtjn/view-file-ng/tree/0.1.5) (2019-04-26)
+[Full Changelog](https://github.com/grtjn/view-file-ng/compare/0.1.4...0.1.5)
+
+**Fixed bugs:**
+
+- Friendly-json prints strings in arrays badly if preceded by an object [\#23](https://github.com/grtjn/view-file-ng/issues/23)
+
+**Closed issues:**
+
+- Revert to master json-explorer [\#22](https://github.com/grtjn/view-file-ng/issues/22)
+
 ## [0.1.4](https://github.com/grtjn/view-file-ng/tree/0.1.4) (2017-12-04)
 [Full Changelog](https://github.com/grtjn/view-file-ng/compare/0.1.3...0.1.4)
 

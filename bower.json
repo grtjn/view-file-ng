@@ -1,6 +1,6 @@
 {
   "name": "view-file-ng",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Angular directive for previewing files",
   "main": [
     "dist/view-file-ng.js",
